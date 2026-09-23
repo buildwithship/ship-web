@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 import AdBanner from '@/components/common/AdBanner';
+import RightUtilityRail from '@/components/layout/RightUtilityRail';
 
 import styles from './AppShell.module.css';
 
@@ -108,54 +109,46 @@ export default function AppShell({
 
   return (
     <div className={styles.shell}>
-      <aside
-        className={styles.sidebar}
-      >
+      <aside className={styles.sidebar}>
         <Link
           href="/"
           className={styles.brand}
         >
-          <span
-            className={styles.logo}
-          >
+          <span className={styles.logo}>
             <ShipMark />
           </span>
 
-          <strong>SHIP</strong>
+          <strong>
+            SHIP
+          </strong>
         </Link>
 
-        <nav
-          className={
-            styles.navigation
-          }
-        >
-          {navigation.map(
-            (item) => {
-              const Icon =
-                item.icon;
+        <nav className={styles.navigation}>
+          {navigation.map((item) => {
+            const Icon =
+              item.icon;
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={
-                    isActive(
-                      item.href,
-                    )
-                      ? styles.active
-                      : undefined
-                  }
-                >
-                  <Icon
-                    size={19}
-                    strokeWidth={2}
-                  />
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={
+                  isActive(
+                    item.href,
+                  )
+                    ? styles.active
+                    : undefined
+                }
+              >
+                <Icon
+                  size={19}
+                  strokeWidth={2}
+                />
 
-                  {item.label}
-                </Link>
-              );
-            },
-          )}
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div
@@ -175,14 +168,8 @@ export default function AppShell({
         </div>
       </aside>
 
-      <div
-        className={
-          styles.workspace
-        }
-      >
-        <header
-          className={styles.topbar}
-        >
+      <div className={styles.workspace}>
+        <header className={styles.topbar}>
           <div
             className={
               styles.mobileBrand
@@ -252,7 +239,9 @@ export default function AppShell({
                 styles.mobileUpload
               }
             >
-              <Plus size={17} />
+              <Plus
+                size={17}
+              />
               올리기
             </Link>
           </div>
@@ -265,8 +254,12 @@ export default function AppShell({
             {navigation.map(
               (item) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={
+                    item.href
+                  }
+                  href={
+                    item.href
+                  }
                   className={
                     isActive(
                       item.href,
@@ -275,16 +268,16 @@ export default function AppShell({
                       : undefined
                   }
                 >
-                  {item.label}
+                  {
+                    item.label
+                  }
                 </Link>
               ),
             )}
           </nav>
         </header>
 
-        <div
-          className={styles.main}
-        >
+        <div className={styles.main}>
           <div
             className={
               styles.content
@@ -298,6 +291,8 @@ export default function AppShell({
           </div>
         </div>
       </div>
+
+      <RightUtilityRail />
     </div>
   );
 }

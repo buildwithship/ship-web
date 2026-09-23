@@ -1,0 +1,197 @@
+.rail {
+  position: fixed;
+  z-index: 45;
+
+  top: 50%;
+  right: 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+
+  transform:
+    translateY(-50%);
+}
+
+.item {
+  position: relative;
+
+  min-width: 46px;
+  height: 46px;
+
+  padding: 0 13px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  background: #ffffff;
+
+  border: 1px solid #d3dee6;
+  border-radius: 13px;
+
+  box-shadow:
+    0 6px 18px
+      rgba(
+        27,
+        57,
+        78,
+        0.08
+      );
+
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
+}
+
+.item:hover {
+  transform:
+    translateX(-3px);
+
+  border-color: #a9bfd0;
+
+  box-shadow:
+    0 9px 24px
+      rgba(
+        27,
+        57,
+        78,
+        0.13
+      );
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.instagram {
+  width: 46px;
+  padding: 0;
+}
+
+.instagram:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #fff8fb,
+      #fffaf4
+    );
+}
+
+.feedback {
+  width: auto;
+
+  color: #0b4fa3;
+  background: #f5faff;
+
+  border-color: #c6ddee;
+}
+
+.feedback:hover {
+  background: #edf6fd;
+
+  border-color: #9dc9e8;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.tooltip {
+  position: absolute;
+
+  top: 50%;
+  right: calc(100% + 10px);
+
+  padding: 6px 8px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  color: #ffffff;
+  background: #1f2b33;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transform:
+    translateY(-50%)
+    translateX(5px);
+
+  transition:
+    opacity 130ms ease,
+    transform 130ms ease,
+    visibility 130ms ease;
+
+  pointer-events: none;
+}
+
+.item:hover
+  .tooltip {
+  opacity: 1;
+  visibility: visible;
+
+  transform:
+    translateY(-50%)
+    translateX(0);
+}
+
+.feedback
+  .tooltip {
+  display: none;
+}
+
+@media (
+  max-width: 1380px
+) {
+  .rail {
+    right: 10px;
+  }
+
+  .feedback {
+    width: 46px;
+    padding: 0;
+  }
+
+  .feedback
+    .label {
+    display: none;
+  }
+
+  .feedback
+    .tooltip {
+    display: block;
+  }
+}
+
+@media (
+  max-width: 1120px
+) {
+  .rail {
+    display: none;
+  }
+}
