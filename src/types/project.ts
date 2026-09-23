@@ -1,4 +1,12 @@
-export type ProjectPlatform = 'web' | 'appStore' | 'googlePlay';
+export type ProjectPlatform =
+  | 'web'
+  | 'appStore'
+  | 'googlePlay';
+
+export type ProjectStatus =
+  | 'operating'
+  | 'inProgress'
+  | 'ended';
 
 export interface ProjectLink {
   platform: ProjectPlatform;
@@ -8,6 +16,7 @@ export interface ProjectLink {
 export interface ProjectMaker {
   name: string;
   username: string;
+  avatarUrl: string;
 }
 
 export interface Project {
@@ -21,6 +30,8 @@ export interface Project {
   logoUrl: string;
   bannerUrl: string;
 
+  galleryUrls?: string[];
+
   categories: string[];
 
   maker: ProjectMaker;
@@ -28,6 +39,8 @@ export interface Project {
   pushCount: number;
   viewCount: number;
   teamSize: number;
+
+  status: ProjectStatus;
 
   recruiting: boolean;
   spotlight?: boolean;

@@ -4,12 +4,13 @@ import { notFound } from 'next/navigation';
 
 import {
   ArrowLeft,
-  ExternalLink,
   Eye,
   Users,
 } from 'lucide-react';
 
+import PlatformLinks from '@/components/project/PlatformLinks';
 import ProjectDetailActions from '@/components/project/ProjectDetailActions';
+import ProjectGallery from '@/components/project/gallery/ProjectGallery';
 
 import {
   getProjectBySlug,
@@ -25,178 +26,334 @@ interface ProjectPageProps {
 }
 
 export function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
+  return projects.map(
+    (project) => ({
+      slug: project.slug,
+    }),
+  );
 }
 
 export default async function ProjectPage({
   params,
 }: ProjectPageProps) {
-  const { slug } = await params;
+  const { slug } =
+    await params;
 
-  const project = getProjectBySlug(slug);
+  const project =
+    getProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
+  const statusLabel =
+    project.status ===
+    'operating'
+      ? '운영중'
+      : project.status ===
+          'inProgress'
+        ? '진행중'
+        : '운영종료';
+
+  const galleryImages =
+    project.galleryUrls &&
+    project.galleryUrls.length >
+      0
+      ? project.galleryUrls
+      : [project.bannerUrl];
+
   return (
-    <main className={styles.page}>
-      <div className="page-container">
-        <Link href="/" className={styles.back}>
-          <ArrowLeft size={17} />
-          프로젝트
-        </Link>
+    <main
+      className={styles.page}
+    >
+      <Link
+        href="/projects"
+        className={styles.back}
+      >
+        <ArrowLeft
+          size={18}
+        />
+        프로젝트
+      </Link>
 
-        <section className={styles.header}>
-          <div className={styles.projectInfo}>
-            <Image
-              src={project.logoUrl}
-              alt={`${project.name} 로고`}
-              width={76}
-              height={76}
-              className={styles.logo}
-            />
-
-            <div>
-              <div className={styles.projectTopline}>
-                <span>SHIPPED PROJECT</span>
-
-                {project.recruiting && (
-                  <span className={styles.recruiting}>
-                    <Users size={13} />
-                    팀원 모집 중
-                  </span>
-                )}
-              </div>
-
-              <h1>{project.name}</h1>
-
-              <p className={styles.tagline}>
-                {project.tagline}
-              </p>
-
-              <span className={styles.maker}>
-                by {project.maker.name}
-              </span>
-            </div>
-          </div>
-
-          <ProjectDetailActions
-            initialPushCount={project.pushCount}
-            projectName={project.name}
-          />
-        </section>
-
-        <div className={styles.banner}>
+      <section
+        className={styles.header}
+      >
+        <div
+          className={styles.identity}
+        >
           <Image
-            src={project.bannerUrl}
-            alt={`${project.name} 대표 이미지`}
-            fill
-            priority
-            sizes="100vw"
-            className={styles.bannerImage}
+            src={project.logoUrl}
+            alt={`${project.name} 로고`}
+            width={78}
+            height={78}
+            className={styles.logo}
           />
+
+          <div
+            className={
+              styles.headerContent
+            }
+          >
+            <div
+              className={
+                styles.statusRow
+              }
+            >
+              <span
+                className={`${styles.status} ${
+                  project.status ===
+                  'operating'
+                    ? styles.statusOperating
+                    : project.status ===
+                        'inProgress'
+                      ? styles.statusProgress
+                      : styles.statusEnded
+                }`}
+              >
+                {statusLabel}
+              </span>
+
+              {project.recruiting && (
+                <span
+                  className={
+                    styles.recruiting
+                  }
+                >
+                  <Users
+                    size={14}
+                  />
+                  팀원 모집
+                </span>
+              )}
+            </div>
+
+            <h1>
+              {project.name}
+            </h1>
+
+            <p>
+              {project.tagline}
+            </p>
+
+            <Link
+              href={`/makers/${project.maker.username}`}
+              className={
+                styles.maker
+              }
+            >
+              <Image
+                src={
+                  project.maker
+                    .avatarUrl
+                }
+                alt={
+                  project.maker
+                    .name
+                }
+                width={25}
+                height={25}
+              />
+
+              <span>
+                {
+                  project.maker
+                    .name
+                }
+              </span>
+            </Link>
+          </div>
         </div>
 
-        <section className={styles.content}>
-          <div className={styles.main}>
-            <div className={styles.section}>
-              <span className={styles.sectionLabel}>
-                ABOUT
-              </span>
+        <ProjectDetailActions
+          initialPushCount={
+            project.pushCount
+          }
+          projectName={
+            project.name
+          }
+        />
+      </section>
 
-              <h2>프로젝트 소개</h2>
+      <ProjectGallery
+        images={galleryImages}
+        projectName={
+          project.name
+        }
+      />
 
-              <p>{project.description}</p>
-            </div>
+      <section
+        className={styles.layout}
+      >
+        <div
+          className={styles.main}
+        >
+          <section
+            className={
+              styles.contentSection
+            }
+          >
+            <h2>
+              프로젝트 소개
+            </h2>
 
-            <div className={styles.section}>
-              <span className={styles.sectionLabel}>
-                CATEGORIES
-              </span>
+            <p>
+              {
+                project.description
+              }
+            </p>
+          </section>
 
-              <div className={styles.tags}>
-                {project.categories.map((category) => (
-                  <span key={category}>
-                    {category}
-                  </span>
-                ))}
+          {project.recruiting && (
+            <section
+              className={
+                styles.recruitBox
+              }
+            >
+              <div
+                className={
+                  styles.recruitIcon
+                }
+              >
+                <Users
+                  size={21}
+                />
               </div>
-            </div>
 
-            {project.recruiting && (
-              <div className={styles.recruitBox}>
-                <div>
-                  <span>OPEN FOR CREW</span>
-
-                  <h3>
-                    이 프로젝트와 함께할 사람을 찾고 있어요.
-                  </h3>
-
-                  <p>
-                    자세한 모집 포지션은 다음 작업에서
-                    연결할 예정입니다.
-                  </p>
-                </div>
-
-                <button type="button">
-                  지원하기
-                </button>
-              </div>
-            )}
-          </div>
-
-          <aside className={styles.sidebar}>
-            <div className={styles.statsBox}>
               <div>
+                <strong>
+                  함께할 팀원을 찾고
+                  있어요
+                </strong>
+
+                <p>
+                  모집 중인 포지션을
+                  확인하고 프로젝트에
+                  지원할 수 있습니다.
+                </p>
+              </div>
+
+              <button
+                type="button"
+              >
+                모집 보기
+              </button>
+            </section>
+          )}
+        </div>
+
+        <aside
+          className={styles.sidebar}
+        >
+          <section
+            className={
+              styles.sideBlock
+            }
+          >
+            <h3>
+              프로젝트 정보
+            </h3>
+
+            <div
+              className={
+                styles.stats
+              }
+            >
+              <div>
+                <Eye
+                  size={18}
+                />
+
+                <span>
+                  조회
+                </span>
+
                 <strong>
                   {project.viewCount.toLocaleString()}
                 </strong>
-
-                <span>
-                  <Eye size={15} />
-                  Views
-                </span>
               </div>
 
               <div>
-                <strong>{project.teamSize}</strong>
+                <Users
+                  size={18}
+                />
 
                 <span>
-                  <Users size={15} />
-                  Crew
+                  참여 인원
                 </span>
+
+                <strong>
+                  {
+                    project.teamSize
+                  }
+                </strong>
               </div>
             </div>
+          </section>
 
-            <div className={styles.links}>
-              <span>프로젝트 바로가기</span>
+          <section
+            className={
+              styles.sideBlock
+            }
+          >
+            <h3>분야</h3>
 
-              {project.platforms.map((platform) => (
-                <a
-                  key={platform.platform}
-                  href={platform.url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {platform.platform === 'web' &&
-                    'Website'}
-
-                  {platform.platform === 'appStore' &&
-                    'App Store'}
-
-                  {platform.platform ===
-                    'googlePlay' && 'Google Play'}
-
-                  <ExternalLink size={15} />
-                </a>
-              ))}
+            <div
+              className={
+                styles.tags
+              }
+            >
+              {project.categories.map(
+                (
+                  category,
+                ) => (
+                  <span
+                    key={
+                      category
+                    }
+                  >
+                    {
+                      category
+                    }
+                  </span>
+                ),
+              )}
             </div>
-          </aside>
-        </section>
-      </div>
+          </section>
+        </aside>
+      </section>
+
+      <section
+        className={
+          styles.serviceLinks
+        }
+      >
+        <div
+          className={
+            styles.serviceLinksHeading
+          }
+        >
+          <h2>
+            서비스 바로가기
+          </h2>
+
+          <p>
+            실제 서비스를 확인해보세요.
+          </p>
+        </div>
+
+        <div
+          className={
+            styles.serviceLinksContent
+          }
+        >
+          <PlatformLinks
+            links={
+              project.platforms
+            }
+          />
+        </div>
+      </section>
     </main>
   );
 }

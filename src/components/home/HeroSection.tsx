@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
-import { ArrowRight, Compass } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 import styles from './HeroSection.module.css';
 
@@ -8,57 +9,48 @@ export default function HeroSection() {
   return (
     <section className={styles.hero}>
       <div className={styles.content}>
-        <div className={styles.eyebrow}>
-          <Compass size={15} strokeWidth={2} />
-          DISCOVER WHAT PEOPLE SHIP
-        </div>
+        <span className={styles.brand}>
+          SHIP
+        </span>
 
         <h1>
-          Build.
+          만든 프로젝트를 보여주고,
           <br />
-          Ship.
-          <br />
-          <span>Connect.</span>
+          다음 팀을 만나세요.
         </h1>
 
         <p>
-          사람들이 만든 새로운 프로젝트를 발견하고,
-          <br />
-          다음 프로젝트를 함께할 사람과 연결되어 보세요.
+          출시한 앱과 웹서비스를 올리고,
+          다른 메이커의 프로젝트를 발견해보세요.
         </p>
 
         <div className={styles.actions}>
-          <a
-            href="#projects"
-            className="button button--primary button--large"
+          <Link
+            href="/projects"
+            className="button button--primary"
           >
             프로젝트 둘러보기
-            <ArrowRight size={18} strokeWidth={2} />
-          </a>
+            <ArrowRight size={16} />
+          </Link>
 
-          <a
-            href="#open-crew"
-            className="button button--secondary button--large"
+          <Link
+            href="/projects/new"
+            className="button button--secondary"
           >
-            팀원 모집 보기
-          </a>
+            프로젝트 올리기
+          </Link>
         </div>
       </div>
 
       <div className={styles.imageWrap}>
         <Image
           src="/images/brand/hero-ocean.jpg"
-          alt="SHIP 항해 이미지"
+          alt="바다를 항해하는 모습"
           fill
           priority
-          sizes="(max-width: 900px) 100vw, 50vw"
+          sizes="(max-width: 900px) 100vw, 45vw"
           className={styles.image}
         />
-
-        <div className={styles.imageLabel}>
-          <span>SHIP</span>
-          <strong>Start your next voyage.</strong>
-        </div>
       </div>
     </section>
   );

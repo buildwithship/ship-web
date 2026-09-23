@@ -3,10 +3,11 @@
 import { useState } from 'react';
 
 import {
-  ArrowUp,
   Check,
   Share2,
 } from 'lucide-react';
+
+import PushButton from './PushButton';
 
 interface ProjectDetailActionsProps {
   initialPushCount: number;
@@ -17,14 +18,12 @@ export default function ProjectDetailActions({
   initialPushCount,
   projectName,
 }: ProjectDetailActionsProps) {
-  const [isPushed, setIsPushed] = useState(false);
-  const [copied, setCopied] = useState(false);
-
-  const pushCount =
-    initialPushCount + (isPushed ? 1 : 0);
+  const [copied, setCopied] =
+    useState(false);
 
   const handleShare = async () => {
-    const url = window.location.href;
+    const url =
+      window.location.href;
 
     if (navigator.share) {
       await navigator.share({
@@ -35,7 +34,9 @@ export default function ProjectDetailActions({
       return;
     }
 
-    await navigator.clipboard.writeText(url);
+    await navigator.clipboard.writeText(
+      url,
+    );
 
     setCopied(true);
 
@@ -46,21 +47,11 @@ export default function ProjectDetailActions({
 
   return (
     <div className="project-detail-actions">
-      <button
-        type="button"
-        className={`project-detail-push ${
-          isPushed
-            ? 'project-detail-push--active'
-            : ''
-        }`}
-        onClick={() => {
-          setIsPushed((prev) => !prev);
-        }}
-      >
-        <ArrowUp size={18} strokeWidth={2.2} />
-
-        PUSH {pushCount}
-      </button>
+      <PushButton
+        initialCount={
+          initialPushCount
+        }
+      />
 
       <button
         type="button"
@@ -73,7 +64,9 @@ export default function ProjectDetailActions({
           <Share2 size={17} />
         )}
 
-        {copied ? '링크 복사됨' : '공유'}
+        {copied
+          ? '링크 복사됨'
+          : '공유'}
       </button>
     </div>
   );

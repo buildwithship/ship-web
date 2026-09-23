@@ -1,0 +1,42 @@
+.feed {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 13px;
+}
+
+.more {
+  width: 100%;
+  min-height: 46px;
+
+  margin-top: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  color: #34414c;
+  background: #ffffff;
+
+  border: 1px solid #ced8df;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.more:hover {
+  color: #0b4fa3;
+
+  background: #f6faff;
+
+  border-color: #abc9df;
+}
