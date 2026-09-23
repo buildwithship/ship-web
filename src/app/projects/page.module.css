@@ -1,0 +1,207 @@
+.page {
+  padding: 46px 0 80px;
+}
+
+.heading {
+  padding-bottom: 25px;
+
+  border-bottom: 1px solid #dce3e8;
+}
+
+.heading h1 {
+  margin: 0;
+
+  color: #181d21;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  letter-spacing: -0.04em;
+}
+
+.heading p {
+  margin: 8px 0 0;
+
+  color: #4d5963;
+
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.layout {
+  margin-top: 28px;
+
+  display: grid;
+
+  grid-template-columns:
+    150px
+    minmax(0, 1fr)
+    190px;
+
+  align-items: start;
+
+  gap: 22px;
+}
+
+.left,
+.right {
+  position: sticky;
+
+  top: 88px;
+}
+
+.left {
+  padding: 14px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+  border: 1px solid #d9e1e7;
+  border-radius: 12px;
+}
+
+.left h3,
+.right h3 {
+  margin: 0 0 11px;
+
+  color: #252b30;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.left button {
+  min-height: 35px;
+
+  padding: 0 9px;
+
+  text-align: left;
+
+  color: #4a5660;
+  background: transparent;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.left button:hover {
+  background: #f1f6fa;
+}
+
+.left .active {
+  color: #0b4fa3;
+
+  background: #edf5fd;
+
+  font-weight: 800;
+}
+
+.center {
+  min-width: 0;
+}
+
+.right {
+  padding: 14px;
+
+  border: 1px solid #d9e1e7;
+  border-radius: 12px;
+}
+
+.right > a:not(.makersMore) {
+  padding: 9px 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border-bottom: 1px solid #e1e7eb;
+}
+
+.right img {
+  width: 34px;
+  height: 34px;
+
+  object-fit: cover;
+
+  border-radius: 9px;
+}
+
+.right div {
+  min-width: 0;
+}
+
+.right strong {
+  display: block;
+
+  color: #293036;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.right span {
+  display: block;
+
+  margin-top: 2px;
+
+  overflow: hidden;
+
+  color: #64707a;
+
+  font-size: 10px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.makersMore {
+  display: block;
+
+  margin-top: 12px;
+
+  color: #0b4fa3;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+@media (max-width: 1050px) {
+  .layout {
+    grid-template-columns:
+      140px
+      minmax(0, 1fr);
+  }
+
+  .right {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    position: static;
+
+    flex-direction: row;
+
+    overflow-x: auto;
+  }
+
+  .left h3 {
+    display: none;
+  }
+
+  .left button {
+    flex-shrink: 0;
+  }
+}

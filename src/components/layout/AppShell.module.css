@@ -1,0 +1,351 @@
+.shell {
+  min-height: 100vh;
+
+  display: grid;
+
+  grid-template-columns:
+    212px
+    minmax(0, 1fr);
+
+  background: #ffffff;
+}
+
+.sidebar {
+  position: sticky;
+
+  top: 0;
+
+  height: 100vh;
+
+  padding:
+    24px
+    16px
+    18px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border-right:
+    1px solid #dbe3e9;
+}
+
+.brand {
+  height: 44px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.logo {
+  width: 31px;
+  height: 31px;
+
+  color: #0b4fa3;
+}
+
+.logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.brand strong,
+.mobileBrand strong {
+  color: #171b1f;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  letter-spacing: 0.06em;
+}
+
+.navigation {
+  margin-top: 31px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.navigation a {
+  min-height: 45px;
+
+  padding: 0 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  color: #46525d;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.navigation a:hover {
+  color: #1c2227;
+
+  background: #f2f5f7;
+}
+
+.navigation .active {
+  color: #0b4fa3;
+
+  background: #edf5fd;
+
+  font-weight: 800;
+}
+
+.sidebarBottom {
+  margin-top: auto;
+}
+
+.shipButton {
+  min-height: 44px;
+
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+  background: #0b4fa3;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.shipButton:hover {
+  background: #083e82;
+}
+
+.workspace {
+  min-width: 0;
+}
+
+.topbar {
+  position: sticky;
+  z-index: 40;
+
+  top: 0;
+
+  min-height: 66px;
+
+  padding: 0 26px;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.96
+    );
+
+  border-bottom:
+    1px solid #dbe3e9;
+
+  backdrop-filter: blur(12px);
+}
+
+.topbarActions {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.iconButton {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #46525d;
+  background: transparent;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  color: #1e252b;
+
+  background: #f2f5f7;
+}
+
+.profile {
+  width: 34px;
+  height: 34px;
+
+  margin-left: 5px;
+
+  overflow: hidden;
+
+  border: 1px solid #d6dee5;
+  border-radius: 9px;
+}
+
+.profile img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.mobileUpload {
+  display: none;
+}
+
+.mobileBrand,
+.mobileNavigation {
+  display: none;
+}
+
+.main {
+  padding:
+    0
+    24px
+    80px;
+}
+
+.content {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .topbar {
+    min-height: 106px;
+
+    padding:
+      11px
+      20px
+      0;
+
+    flex-wrap: wrap;
+  }
+
+  .mobileBrand {
+    display: block;
+  }
+
+  .mobileBrand a {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+  }
+
+  .mobileUpload {
+    min-height: 36px;
+
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: #ffffff;
+    background: #0b4fa3;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 750;
+  }
+
+  .mobileNavigation {
+    width: 100%;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    overflow-x: auto;
+  }
+
+  .mobileNavigation a {
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+
+    color: #52606b;
+
+    border-bottom:
+      2px solid transparent;
+
+    white-space: nowrap;
+
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .mobileNavigation
+    .mobileActive {
+    color: #1e252b;
+
+    border-bottom-color:
+      #0b4fa3;
+
+    font-weight: 800;
+  }
+
+  .main {
+    padding:
+      0
+      20px
+      64px;
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .iconButton:first-child {
+    display: none;
+  }
+
+  .main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

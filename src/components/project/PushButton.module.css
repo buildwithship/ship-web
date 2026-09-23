@@ -1,0 +1,252 @@
+.button {
+  position: relative;
+
+  min-height: 42px;
+
+  padding: 0 14px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  overflow: visible;
+
+  color: #0b4fa3;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f4faff,
+      #e5f3ff
+    );
+
+  border: 1px solid #a9cee9;
+  border-radius: 11px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 13px
+      rgba(46, 139, 230, 0.08);
+
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+
+  border-color: #6daedc;
+
+  box-shadow:
+    0 7px 20px
+      rgba(46, 139, 230, 0.16);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.active {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0b4fa3,
+      #2e8be6
+    );
+
+  border-color: transparent;
+
+  box-shadow:
+    0 8px 20px
+      rgba(11, 79, 163, 0.22);
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.button strong {
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.03em;
+}
+
+.count {
+  min-width: 20px;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.compact {
+  min-height: 34px;
+
+  padding: 0 10px;
+
+  border-radius: 9px;
+}
+
+.compact .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.compact strong,
+.compact .count {
+  font-size: 11px;
+}
+
+/* 클릭 효과 */
+
+.effect {
+  position: absolute;
+  z-index: 10;
+
+  left: 50%;
+  bottom: 75%;
+
+  width: 80px;
+  height: 70px;
+
+  pointer-events: none;
+
+  transform:
+    translateX(-50%);
+}
+
+.flyingShip {
+  position: absolute;
+
+  left: 50%;
+  bottom: 0;
+
+  width: 32px;
+  height: 32px;
+
+  color: #2e8be6;
+
+  filter:
+    drop-shadow(
+      0 5px 7px
+      rgba(46, 139, 230, 0.28)
+    );
+
+  animation:
+    shipLaunch 720ms
+    cubic-bezier(
+      0.18,
+      0.9,
+      0.3,
+      1
+    )
+    forwards;
+}
+
+.flyingShip svg {
+  width: 100%;
+  height: 100%;
+}
+
+.waveOne,
+.waveTwo {
+  position: absolute;
+
+  left: 50%;
+  bottom: 5px;
+
+  width: 20px;
+  height: 8px;
+
+  border-bottom:
+    2px solid
+    rgba(46, 139, 230, 0.7);
+
+  border-radius: 50%;
+
+  transform:
+    translateX(-50%);
+
+  animation:
+    waveSpread
+    650ms ease-out
+    forwards;
+}
+
+.waveTwo {
+  animation-delay: 90ms;
+}
+
+@keyframes shipLaunch {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(
+        -50%,
+        8px
+      )
+      scale(0.65)
+      rotate(-4deg);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+
+    transform:
+      translate(
+        -50%,
+        -30px
+      )
+      scale(1.08)
+      rotate(3deg);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        -50%,
+        -45px
+      )
+      scale(0.94)
+      rotate(1deg);
+  }
+}
+
+@keyframes waveSpread {
+  0% {
+    opacity: 0.8;
+
+    width: 14px;
+  }
+
+  100% {
+    opacity: 0;
+
+    width: 54px;
+  }
+}

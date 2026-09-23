@@ -1,0 +1,443 @@
+.gallery {
+  position: relative;
+
+  width: 100%;
+
+  margin-top: 28px;
+  padding: 18px 0 9px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8fcff 0%,
+      #eef7fd 100%
+    );
+
+  border:
+    1px solid #d3e4ef;
+
+  border-radius: 20px;
+}
+
+.backgroundGlow {
+  position: absolute;
+
+  top: -100px;
+  left: 50%;
+
+  width: 560px;
+  height: 260px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(
+        81,
+        177,
+        238,
+        0.18
+      ),
+      rgba(
+        81,
+        177,
+        238,
+        0
+      )
+        68%
+    );
+
+  transform:
+    translateX(-50%);
+
+  pointer-events: none;
+}
+
+.viewport {
+  position: relative;
+
+  width: 100%;
+  height: 278px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.mainSlide {
+  position: absolute;
+  z-index: 3;
+
+  left: 50%;
+  top: 50%;
+
+  width: 66%;
+  height: 250px;
+
+  overflow: hidden;
+
+  background: #dfeaf2;
+
+  border:
+    1px solid #bdd5e5;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 14px 32px
+      rgba(
+        35,
+        85,
+        119,
+        0.16
+      );
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+}
+
+.mainImage {
+  object-fit: cover;
+
+  animation:
+    imageEnter
+    300ms ease;
+}
+
+.mainOverlay {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  box-shadow:
+    inset 0 -55px 60px
+      rgba(
+        17,
+        42,
+        59,
+        0.08
+      );
+}
+
+.imageCount {
+  position: absolute;
+  z-index: 3;
+
+  right: 12px;
+  bottom: 11px;
+
+  min-width: 52px;
+  height: 28px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  color: #ffffff;
+
+  background:
+    rgba(
+      19,
+      42,
+      58,
+      0.62
+    );
+
+  border: 1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.2
+    );
+
+  border-radius: 999px;
+
+  backdrop-filter:
+    blur(8px);
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.imageCount span {
+  opacity: 0.55;
+}
+
+.preview {
+  position: absolute;
+  z-index: 1;
+
+  top: 50%;
+
+  width: 30%;
+  height: 205px;
+
+  overflow: hidden;
+
+  padding: 0;
+
+  background: #dce8f0;
+
+  border:
+    1px solid #c5d7e3;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  transform:
+    translateY(-50%)
+    scale(0.94);
+
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+.preview:hover {
+  transform:
+    translateY(-50%)
+    scale(0.97);
+
+  opacity: 0.9;
+}
+
+.previewLeft {
+  left: -8%;
+}
+
+.previewRight {
+  right: -8%;
+}
+
+.previewImage {
+  object-fit: cover;
+
+  filter:
+    saturate(0.72)
+    brightness(0.76);
+}
+
+.previewShade {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    rgba(
+      32,
+      60,
+      78,
+      0.18
+    );
+}
+
+.arrow {
+  position: absolute;
+  z-index: 5;
+
+  top: 50%;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #263d4d;
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.94
+    );
+
+  border:
+    1px solid #c6d8e4;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 5px 15px
+      rgba(
+        29,
+        69,
+        98,
+        0.14
+      );
+
+  cursor: pointer;
+
+  transform:
+    translateY(-50%);
+
+  transition:
+    transform 140ms ease,
+    background 140ms ease;
+}
+
+.arrow:hover {
+  background: #ffffff;
+
+  transform:
+    translateY(-50%)
+    scale(1.06);
+}
+
+.arrowLeft {
+  left: calc(17% - 19px);
+}
+
+.arrowRight {
+  right:
+    calc(
+      17% - 19px
+    );
+}
+
+.pagination {
+  position: relative;
+  z-index: 5;
+
+  min-height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+}
+
+.pagination button {
+  width: 6px;
+  height: 6px;
+
+  padding: 0;
+
+  background: #bdcdd8;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition:
+    width 180ms ease,
+    background 180ms ease;
+}
+
+.pagination .activePage {
+  width: 26px;
+
+  background: #2f91e7;
+}
+
+@keyframes imageEnter {
+  from {
+    opacity: 0.8;
+
+    transform:
+      scale(1.015);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+}
+
+@media (max-width: 780px) {
+  .gallery {
+    padding-top: 14px;
+  }
+
+  .viewport {
+    height: 245px;
+  }
+
+  .mainSlide {
+    width: 76%;
+    height: 220px;
+  }
+
+  .preview {
+    width: 27%;
+    height: 175px;
+  }
+
+  .previewLeft {
+    left: -10%;
+  }
+
+  .previewRight {
+    right: -10%;
+  }
+
+  .arrowLeft {
+    left: 8%;
+  }
+
+  .arrowRight {
+    right: 8%;
+  }
+}
+
+@media (max-width: 560px) {
+  .gallery {
+    margin-top: 22px;
+
+    padding:
+      10px
+      10px
+      7px;
+
+    border-radius: 16px;
+  }
+
+  .viewport {
+    height: 218px;
+  }
+
+  .mainSlide {
+    width: 100%;
+    height: 205px;
+
+    border-radius: 13px;
+  }
+
+  .preview {
+    display: none;
+  }
+
+  .arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .arrowLeft {
+    left: 10px;
+  }
+
+  .arrowRight {
+    right: 10px;
+  }
+}

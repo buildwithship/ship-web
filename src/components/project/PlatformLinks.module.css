@@ -1,0 +1,191 @@
+.links {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  white-space: nowrap;
+
+  scrollbar-width: none;
+}
+
+.links::-webkit-scrollbar {
+  display: none;
+}
+
+.storeLink {
+  height: 40px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform 140ms ease,
+    opacity 140ms ease;
+}
+
+.storeLink:hover {
+  transform: translateY(-1px);
+
+  opacity: 0.9;
+}
+
+/* App Store */
+
+.appStoreFrame {
+  width: 120px;
+  height: 40px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 6px;
+}
+
+.appStoreBadge {
+  width: 120px;
+  height: 40px;
+
+  display: block;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+/* Google Play */
+
+.googlePlayFrame {
+  position: relative;
+
+  width: 135px;
+  height: 40px;
+
+  flex: 0 0 auto;
+
+  display: block;
+
+  overflow: hidden;
+
+  border-radius: 6px;
+}
+
+.googlePlayBadge {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 154px;
+  height: auto;
+
+  display: block;
+
+  transform:
+    translate(-50%, -50%);
+
+  pointer-events: none;
+}
+
+/* Website */
+
+.website {
+  width: 110px;
+  height: 40px;
+
+  padding: 0 11px;
+
+  flex: 0 0 auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #46a1e8 0%,
+      #1475c6 100%
+    );
+
+  border: 1px solid
+    rgba(12, 102, 180, 0.18);
+
+  border-radius: 7px;
+
+  box-shadow:
+    0 4px 12px
+      rgba(39, 135, 211, 0.15);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.website:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 17px
+      rgba(39, 135, 211, 0.23);
+}
+
+.websiteIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 560px) {
+  .links {
+    gap: 6px;
+  }
+
+  .appStoreFrame {
+    width: 114px;
+    height: 38px;
+  }
+
+  .appStoreBadge {
+    width: 114px;
+    height: 38px;
+  }
+
+  .googlePlayFrame {
+    width: 128px;
+    height: 38px;
+  }
+
+  .googlePlayBadge {
+    width: 146px;
+  }
+
+  .website {
+    width: 104px;
+    height: 38px;
+
+    padding: 0 9px;
+  }
+}

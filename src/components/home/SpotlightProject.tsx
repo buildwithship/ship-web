@@ -1,19 +1,18 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 
 import {
   ArrowRight,
-  ArrowUp,
   Eye,
   Users,
 } from 'lucide-react';
 
-import PlatformLinks from '@/components/project/PlatformLinks';
+import PushButton from '@/components/project/PushButton';
 
-import { Project } from '@/types/project';
+import {
+  Project,
+  ProjectStatus,
+} from '@/types/project';
 
 import styles from './SpotlightProject.module.css';
 
@@ -21,110 +20,220 @@ interface SpotlightProjectProps {
   project: Project;
 }
 
-function formatCount(value: number) {
-  if (value < 1000) {
-    return value.toString();
+function getStatus(
+  status: ProjectStatus,
+) {
+  if (status === 'operating') {
+    return {
+      text: '운영중',
+      className:
+        styles.statusOperating,
+    };
   }
 
-  return `${(value / 1000).toFixed(1).replace('.0', '')}K`;
+  if (status === 'inProgress') {
+    return {
+      text: '진행중',
+      className:
+        styles.statusProgress,
+    };
+  }
+
+  return {
+    text: '운영종료',
+    className:
+      styles.statusEnded,
+  };
+}
+
+function ShipMark() {
+  return (
+    <svg
+      viewBox="0 0 44 44"
+      aria-hidden="true"
+    >
+      <path
+        d="M21.6 5.2v18.1L9.7 20.7c2.7-6.9 6.6-12.1 11.9-15.5Z"
+        fill="currentColor"
+        opacity="0.55"
+      />
+
+      <path
+        d="M24 8.6v14.9l10.5-2.2C32 15.8 28.5 11.6 24 8.6Z"
+        fill="currentColor"
+      />
+
+      <path
+        d="M8.3 25.2h27.4l-3.6 6.3H12l-3.7-6.3Z"
+        fill="currentColor"
+        opacity="0.84"
+      />
+
+      <path
+        d="M9.5 35.3c2.7 1.5 5.3 1.5 8 0 2.7-1.5 5.3-1.5 8 0 2.7 1.5 5.3 1.5 8 0"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 export default function SpotlightProject({
   project,
 }: SpotlightProjectProps) {
-  const [isPushed, setIsPushed] = useState(false);
-
-  const pushCount =
-    project.pushCount + (isPushed ? 1 : 0);
+  const status =
+    getStatus(project.status);
 
   return (
     <section className={styles.section}>
-      <div className={styles.heading}>
-        <div className={styles.label}>
-          <span />
+      <div className={styles.titleRow}>
+        <div className={styles.title}>
+          <span
+            className={styles.lightDot}
+          />
           SPOTLIGHT
         </div>
 
-        <p>이번 주 주목할 단 하나의 프로젝트</p>
+        <span>
+          이번 주 주목할 프로젝트
+        </span>
       </div>
 
       <article className={styles.card}>
-        <div className={styles.content}>
-          <div className={styles.top}>
-            <div className={styles.logoWrap}>
-              <div className={styles.logoGlow} />
+        <div
+          className={styles.lightBeam}
+        />
 
-              <Image
-                src={project.logoUrl}
-                alt={`${project.name} 로고`}
-                width={58}
-                height={58}
-                className={styles.logo}
-              />
+        <div
+          className={styles.lightGlow}
+        />
+
+        <div
+          className={styles.content}
+        >
+          <div
+            className={styles.mark}
+          >
+            <div
+              className={styles.ship}
+            >
+              <ShipMark />
             </div>
 
+            <div>
+              <strong>
+                이번 주의 프로젝트
+              </strong>
+
+              <span>
+                SHIP이 주목하고 있어요
+              </span>
+            </div>
+          </div>
+
+          <div
+            className={
+              styles.statusRow
+            }
+          >
+            <span
+              className={`${styles.status} ${status.className}`}
+            >
+              {status.text}
+            </span>
+
             {project.recruiting && (
-              <span className={styles.recruiting}>
-                <Users size={13} />
-                OPEN FOR CREW
+              <span
+                className={
+                  styles.recruiting
+                }
+              >
+                <Users size={14} />
+                팀원 모집
               </span>
             )}
           </div>
 
-          <div className={styles.copy}>
-            <span>by {project.maker.name}</span>
+          <h2>
+            {project.name}
+          </h2>
 
-            <h2>{project.name}</h2>
+          <p
+            className={
+              styles.tagline
+            }
+          >
+            {project.tagline}
+          </p>
 
-            <h3>{project.tagline}</h3>
+          <Link
+            href={`/makers/${project.maker.username}`}
+            className={styles.maker}
+          >
+            <Image
+              src={
+                project.maker
+                  .avatarUrl
+              }
+              alt={
+                project.maker.name
+              }
+              width={27}
+              height={27}
+            />
 
-            <p>{project.description}</p>
-          </div>
+            {project.maker.name}
+          </Link>
 
-          <div className={styles.bottom}>
-            <div className={styles.stats}>
-              <button
-                type="button"
-                className={`${styles.push} ${
-                  isPushed ? styles.pushActive : ''
-                }`}
-                onClick={() => {
-                  setIsPushed((prev) => !prev);
-                }}
-              >
-                <ArrowUp size={16} />
-                {formatCount(pushCount)}
-              </button>
-
-              <span>
-                <Eye size={16} />
-                {formatCount(project.viewCount)}
-              </span>
-
-              <PlatformLinks links={project.platforms} />
-            </div>
-
+          <div
+            className={
+              styles.actions
+            }
+          >
             <Link
               href={`/projects/${project.slug}`}
-              className={styles.cta}
+              className={
+                styles.viewButton
+              }
             >
               프로젝트 보기
-              <ArrowRight size={16} />
+              <ArrowRight
+                size={16}
+              />
             </Link>
+
+            <PushButton
+              initialCount={
+                project.pushCount
+              }
+            />
+
+            <span
+              className={
+                styles.views
+              }
+            >
+              <Eye size={16} />
+              {project.viewCount.toLocaleString()}
+            </span>
           </div>
         </div>
 
         <Link
           href={`/projects/${project.slug}`}
-          className={styles.visual}
+          className={
+            styles.imageWrap
+          }
         >
           <Image
             src={project.bannerUrl}
             alt={`${project.name} 대표 이미지`}
             fill
             priority
-            sizes="(max-width: 800px) 100vw, 55vw"
-            className={styles.banner}
+            sizes="50vw"
+            className={styles.image}
           />
         </Link>
       </article>
