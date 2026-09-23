@@ -28,11 +28,30 @@ export default function ProjectGallery({
   const [activeIndex, setActiveIndex] =
     useState(0);
 
+  const [isPaused, setIsPaused] =
+    useState(false);
+
   const hasMultiple =
     images.length > 1;
 
+  const previousIndex =
+    (
+      activeIndex -
+      1 +
+      images.length
+    ) % images.length;
+
+  const nextIndex =
+    (
+      activeIndex +
+      1
+    ) % images.length;
+
   useEffect(() => {
-    if (!hasMultiple) {
+    if (
+      !hasMultiple ||
+      isPaused
+    ) {
       return;
     }
 
@@ -51,24 +70,12 @@ export default function ProjectGallery({
   }, [
     hasMultiple,
     images.length,
+    isPaused,
   ]);
 
   if (images.length === 0) {
     return null;
   }
-
-  const previousIndex =
-    (
-      activeIndex -
-      1 +
-      images.length
-    ) % images.length;
-
-  const nextIndex =
-    (
-      activeIndex +
-      1
-    ) % images.length;
 
   const goPrevious = () => {
     setActiveIndex(
@@ -86,22 +93,18 @@ export default function ProjectGallery({
     <section
       className={styles.gallery}
       aria-label={`${projectName} 프로젝트 이미지`}
+      onMouseEnter={() =>
+        setIsPaused(true)
+      }
+      onMouseLeave={() =>
+        setIsPaused(false)
+      }
     >
-      <div
-        className={
-          styles.backgroundGlow
-        }
-      />
-
-      <div
-        className={
-          styles.viewport
-        }
-      >
+      <div className={styles.viewport}>
         {hasMultiple && (
           <button
             type="button"
-            className={`${styles.preview} ${styles.previewLeft}`}
+            className={`${styles.sidePreview} ${styles.leftPreview}`}
             onClick={goPrevious}
             aria-label="이전 이미지 보기"
           >
@@ -113,15 +116,15 @@ export default function ProjectGallery({
               }
               alt={`${projectName} 이전 이미지`}
               fill
-              sizes="260px"
+              sizes="220px"
               className={
-                styles.previewImage
+                styles.sideImage
               }
             />
 
             <span
               className={
-                styles.previewShade
+                styles.sideOverlay
               }
             />
           </button>
@@ -146,33 +149,17 @@ export default function ProjectGallery({
             priority={
               activeIndex === 0
             }
-            sizes="(max-width: 768px) 92vw, 760px"
+            sizes="(max-width: 700px) 92vw, 520px"
             className={
               styles.mainImage
             }
           />
-
-          <div
-            className={
-              styles.mainOverlay
-            }
-          />
-
-          <span
-            className={
-              styles.imageCount
-            }
-          >
-            {activeIndex + 1}
-            <span>/</span>
-            {images.length}
-          </span>
         </div>
 
         {hasMultiple && (
           <button
             type="button"
-            className={`${styles.preview} ${styles.previewRight}`}
+            className={`${styles.sidePreview} ${styles.rightPreview}`}
             onClick={goNext}
             aria-label="다음 이미지 보기"
           >
@@ -182,15 +169,15 @@ export default function ProjectGallery({
               }
               alt={`${projectName} 다음 이미지`}
               fill
-              sizes="260px"
+              sizes="220px"
               className={
-                styles.previewImage
+                styles.sideImage
               }
             />
 
             <span
               className={
-                styles.previewShade
+                styles.sideOverlay
               }
             />
           </button>
@@ -205,8 +192,8 @@ export default function ProjectGallery({
               aria-label="이전 이미지"
             >
               <ChevronLeft
-                size={21}
-                strokeWidth={2.2}
+                size={24}
+                strokeWidth={1.8}
               />
             </button>
 
@@ -217,8 +204,8 @@ export default function ProjectGallery({
               aria-label="다음 이미지"
             >
               <ChevronRight
-                size={21}
-                strokeWidth={2.2}
+                size={24}
+                strokeWidth={1.8}
               />
             </button>
           </>
@@ -231,31 +218,53 @@ export default function ProjectGallery({
             styles.pagination
           }
         >
-          {images.map(
-            (
-              image,
-              index,
-            ) => (
-              <button
-                key={`${image}-${index}`}
-                type="button"
-                className={
-                  index ===
-                  activeIndex
-                    ? styles.activePage
-                    : undefined
-                }
-                onClick={() =>
-                  setActiveIndex(
-                    index,
-                  )
-                }
-                aria-label={`${
-                  index + 1
-                }번째 이미지`}
-              />
-            ),
-          )}
+          <span
+            className={
+              styles.pageNumber
+            }
+          >
+            {activeIndex + 1}
+          </span>
+
+          <div
+            className={
+              styles.pageDots
+            }
+          >
+            {images.map(
+              (
+                image,
+                index,
+              ) => (
+                <button
+                  key={`${image}-${index}`}
+                  type="button"
+                  className={
+                    index ===
+                    activeIndex
+                      ? styles.activeDot
+                      : undefined
+                  }
+                  onClick={() =>
+                    setActiveIndex(
+                      index,
+                    )
+                  }
+                  aria-label={`${
+                    index + 1
+                  }번째 이미지`}
+                />
+              ),
+            )}
+          </div>
+
+          <span
+            className={
+              styles.totalNumber
+            }
+          >
+            {images.length}
+          </span>
         </div>
       )}
     </section>
