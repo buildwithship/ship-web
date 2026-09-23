@@ -1,0 +1,161 @@
+.hero {
+  padding: 88px 0 78px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(440px, 1.1fr);
+
+  align-items: center;
+  gap: 72px;
+}
+
+.content {
+  max-width: 540px;
+}
+
+.eyebrow {
+  margin-bottom: 24px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--brand-primary);
+
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+}
+
+.content h1 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: clamp(52px, 5vw, 74px);
+  line-height: 0.98;
+
+  font-weight: 780;
+  letter-spacing: -0.055em;
+}
+
+.content h1 span {
+  color: var(--brand-primary);
+}
+
+.content p {
+  margin: 28px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.actions {
+  margin-top: 34px;
+
+  display: flex;
+  gap: 10px;
+}
+
+.imageWrap {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 11;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background: var(--surface-secondary);
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imageWrap::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 45%,
+      rgba(4, 32, 62, 0.5) 100%
+    );
+}
+
+.imageLabel {
+  position: absolute;
+  z-index: 2;
+
+  left: 24px;
+  bottom: 22px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  color: #ffffff;
+}
+
+.imageLabel span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.imageLabel strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding-top: 64px;
+
+    grid-template-columns: 1fr;
+
+    gap: 48px;
+  }
+
+  .content {
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 52px 0 40px;
+
+    gap: 38px;
+  }
+
+  .content h1 {
+    font-size: 49px;
+  }
+
+  .content p br {
+    display: none;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions a {
+    width: 100%;
+  }
+
+  .imageWrap {
+    aspect-ratio: 4 / 3;
+
+    border-radius: 16px;
+  }
+}

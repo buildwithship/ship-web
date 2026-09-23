@@ -1,11 +1,11 @@
-import FeaturedProject from '@/components/home/FeaturedProject';
 import HeroSection from '@/components/home/HeroSection';
 import ProjectSection from '@/components/home/ProjectSection';
+import SpotlightProject from '@/components/home/SpotlightProject';
 
 import {
-  featuredProject,
   newProjects,
   recruitingProjects,
+  spotlightProject,
   trendingProjects,
 } from '@/mocks/projects';
 
@@ -15,7 +15,7 @@ export default function Home() {
       <div className="page-container">
         <HeroSection />
 
-        <FeaturedProject project={featuredProject} />
+        <SpotlightProject project={spotlightProject} />
 
         <ProjectSection
           id="projects"

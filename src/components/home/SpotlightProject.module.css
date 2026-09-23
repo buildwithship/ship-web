@@ -1,0 +1,322 @@
+.section {
+  padding: 54px 0 64px;
+}
+
+.heading {
+  margin-bottom: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--text-primary);
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.label span {
+  width: 7px;
+  height: 7px;
+
+  background: var(--brand-secondary);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 5px rgba(46, 139, 230, 0.08);
+}
+
+.heading p {
+  margin: 0;
+
+  color: var(--text-tertiary);
+
+  font-size: 12px;
+}
+
+.card {
+  display: grid;
+
+  grid-template-columns:
+    minmax(330px, 0.86fr)
+    minmax(0, 1.14fr);
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  background: #ffffff;
+}
+
+.content {
+  padding: 34px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoWrap {
+  position: relative;
+
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoGlow {
+  position: absolute;
+
+  width: 52px;
+  height: 52px;
+
+  background: rgba(46, 139, 230, 0.25);
+
+  border-radius: 18px;
+
+  filter: blur(17px);
+
+  transform: scale(1.25);
+}
+
+.logo {
+  position: relative;
+  z-index: 2;
+
+  width: 58px;
+  height: 58px;
+
+  object-fit: cover;
+
+  border: 1px solid rgba(11, 79, 163, 0.08);
+  border-radius: 16px;
+
+  box-shadow:
+    0 0 0 5px rgba(46, 139, 230, 0.06),
+    0 12px 28px rgba(11, 79, 163, 0.16);
+}
+
+.recruiting {
+  min-height: 29px;
+
+  padding: 0 10px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #278a59;
+  background: #eef8f2;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+}
+
+.copy {
+  margin-top: 27px;
+}
+
+.copy > span {
+  color: var(--text-tertiary);
+
+  font-size: 11px;
+}
+
+.copy h2 {
+  margin: 6px 0 0;
+
+  color: var(--text-primary);
+
+  font-size: 32px;
+
+  letter-spacing: -0.045em;
+}
+
+.copy h3 {
+  margin: 9px 0 0;
+
+  color: var(--text-primary);
+
+  font-size: 16px;
+  line-height: 1.5;
+
+  font-weight: 600;
+}
+
+.copy p {
+  max-width: 430px;
+
+  margin: 11px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.bottom {
+  margin-top: auto;
+  padding-top: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stats > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: var(--text-tertiary);
+
+  font-size: 11px;
+}
+
+.push {
+  height: 30px;
+
+  padding: 0 9px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: var(--text-secondary);
+  background: transparent;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.push:hover,
+.pushActive {
+  color: var(--brand-primary);
+  background: var(--brand-soft);
+}
+
+.cta {
+  min-height: 40px;
+
+  padding: 0 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  flex-shrink: 0;
+
+  color: #ffffff;
+  background: var(--brand-primary);
+
+  border-radius: 9px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition: background 150ms ease;
+}
+
+.cta:hover {
+  background: var(--brand-primary-hover);
+}
+
+.visual {
+  position: relative;
+
+  min-height: 365px;
+
+  overflow: hidden;
+
+  background: var(--surface-secondary);
+}
+
+.banner {
+  object-fit: cover;
+
+  transition: transform 250ms ease;
+}
+
+.visual:hover .banner {
+  transform: scale(1.015);
+}
+
+@media (max-width: 850px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .visual {
+    min-height: 340px;
+
+    order: -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 42px 0 50px;
+  }
+
+  .heading p {
+    display: none;
+  }
+
+  .card {
+    border-radius: 16px;
+  }
+
+  .visual {
+    min-height: 240px;
+  }
+
+  .content {
+    padding: 23px;
+  }
+
+  .copy h2 {
+    font-size: 27px;
+  }
+
+  .bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cta {
+    width: 100%;
+  }
+}
