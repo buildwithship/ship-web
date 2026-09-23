@@ -1,12 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-
 import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
-
 import {
   useEffect,
   useState,
@@ -19,7 +17,7 @@ interface ProjectGalleryProps {
   projectName: string;
 }
 
-const AUTO_SLIDE_DELAY = 4500;
+const AUTO_SLIDE_DELAY = 5000;
 
 export default function ProjectGallery({
   images,
@@ -33,19 +31,6 @@ export default function ProjectGallery({
 
   const hasMultiple =
     images.length > 1;
-
-  const previousIndex =
-    (
-      activeIndex -
-      1 +
-      images.length
-    ) % images.length;
-
-  const nextIndex =
-    (
-      activeIndex +
-      1
-    ) % images.length;
 
   useEffect(() => {
     if (
@@ -79,14 +64,69 @@ export default function ProjectGallery({
 
   const goPrevious = () => {
     setActiveIndex(
-      previousIndex,
+      (prev) =>
+        (
+          prev -
+          1 +
+          images.length
+        ) % images.length,
     );
   };
 
   const goNext = () => {
     setActiveIndex(
-      nextIndex,
+      (prev) =>
+        (prev + 1) %
+        images.length,
     );
+  };
+
+  const getRelativePosition = (
+    index: number,
+  ) => {
+    const length =
+      images.length;
+
+    let offset =
+      index - activeIndex;
+
+    if (offset > length / 2) {
+      offset -= length;
+    }
+
+    if (
+      offset <
+      -length / 2
+    ) {
+      offset += length;
+    }
+
+    return offset;
+  };
+
+  const getSlideClass = (
+    index: number,
+  ) => {
+    const position =
+      getRelativePosition(index);
+
+    if (position === 0) {
+      return styles.active;
+    }
+
+    if (position === -1) {
+      return styles.previous;
+    }
+
+    if (position === 1) {
+      return styles.next;
+    }
+
+    if (position < -1) {
+      return styles.hiddenLeft;
+    }
+
+    return styles.hiddenRight;
   };
 
   return (
@@ -100,87 +140,82 @@ export default function ProjectGallery({
         setIsPaused(false)
       }
     >
-      <div className={styles.viewport}>
-        {hasMultiple && (
-          <button
-            type="button"
-            className={`${styles.sidePreview} ${styles.leftPreview}`}
-            onClick={goPrevious}
-            aria-label="이전 이미지 보기"
-          >
-            <Image
-              src={
-                images[
-                  previousIndex
-                ]
-              }
-              alt={`${projectName} 이전 이미지`}
-              fill
-              sizes="220px"
-              className={
-                styles.sideImage
-              }
-            />
+      <div
+        className={
+          styles.viewport
+        }
+      >
+        {images.map(
+          (image, index) => {
+            const position =
+              getRelativePosition(
+                index,
+              );
 
-            <span
-              className={
-                styles.sideOverlay
-              }
-            />
-          </button>
-        )}
+            const isClickable =
+              position === -1 ||
+              position === 1;
 
-        <div
-          className={
-            styles.mainSlide
-          }
-        >
-          <Image
-            key={
-              images[activeIndex]
-            }
-            src={
-              images[activeIndex]
-            }
-            alt={`${projectName} 이미지 ${
-              activeIndex + 1
-            }`}
-            fill
-            priority={
-              activeIndex === 0
-            }
-            sizes="(max-width: 700px) 92vw, 520px"
-            className={
-              styles.mainImage
-            }
-          />
-        </div>
+            return (
+              <button
+                key={`${image}-${index}`}
+                type="button"
+                className={`${styles.slide} ${getSlideClass(
+                  index,
+                )}`}
+                onClick={() => {
+                  if (
+                    position ===
+                    -1
+                  ) {
+                    goPrevious();
+                  }
 
-        {hasMultiple && (
-          <button
-            type="button"
-            className={`${styles.sidePreview} ${styles.rightPreview}`}
-            onClick={goNext}
-            aria-label="다음 이미지 보기"
-          >
-            <Image
-              src={
-                images[nextIndex]
-              }
-              alt={`${projectName} 다음 이미지`}
-              fill
-              sizes="220px"
-              className={
-                styles.sideImage
-              }
-            />
+                  if (
+                    position === 1
+                  ) {
+                    goNext();
+                  }
+                }}
+                tabIndex={
+                  isClickable
+                    ? 0
+                    : -1
+                }
+                aria-label={
+                  position === -1
+                    ? '이전 이미지 보기'
+                    : position ===
+                        1
+                      ? '다음 이미지 보기'
+                      : `${
+                          index + 1
+                        }번째 이미지`
+                }
+              >
+                <Image
+                  src={image}
+                  alt={`${projectName} 이미지 ${
+                    index + 1
+                  }`}
+                  fill
+                  priority={
+                    index === 0
+                  }
+                  sizes="(max-width: 640px) 90vw, 540px"
+                  className={
+                    styles.image
+                  }
+                />
 
-            <span
-              className={
-                styles.sideOverlay
-              }
-            />
-          </button>
+                <span
+                  className={
+                    styles.shade
+                  }
+                />
+              </button>
+            );
+          },
         )}
 
         {hasMultiple && (
@@ -192,7 +227,7 @@ export default function ProjectGallery({
               aria-label="이전 이미지"
             >
               <ChevronLeft
-                size={24}
+                size={25}
                 strokeWidth={1.8}
               />
             </button>
@@ -204,7 +239,7 @@ export default function ProjectGallery({
               aria-label="다음 이미지"
             >
               <ChevronRight
-                size={24}
+                size={25}
                 strokeWidth={1.8}
               />
             </button>
@@ -218,53 +253,31 @@ export default function ProjectGallery({
             styles.pagination
           }
         >
-          <span
-            className={
-              styles.pageNumber
-            }
-          >
-            {activeIndex + 1}
-          </span>
-
-          <div
-            className={
-              styles.pageDots
-            }
-          >
-            {images.map(
-              (
-                image,
-                index,
-              ) => (
-                <button
-                  key={`${image}-${index}`}
-                  type="button"
-                  className={
-                    index ===
-                    activeIndex
-                      ? styles.activeDot
-                      : undefined
-                  }
-                  onClick={() =>
-                    setActiveIndex(
-                      index,
-                    )
-                  }
-                  aria-label={`${
-                    index + 1
-                  }번째 이미지`}
-                />
-              ),
-            )}
-          </div>
-
-          <span
-            className={
-              styles.totalNumber
-            }
-          >
-            {images.length}
-          </span>
+          {images.map(
+            (
+              image,
+              index,
+            ) => (
+              <button
+                key={`${image}-page-${index}`}
+                type="button"
+                className={
+                  index ===
+                  activeIndex
+                    ? styles.activeDot
+                    : undefined
+                }
+                onClick={() =>
+                  setActiveIndex(
+                    index,
+                  )
+                }
+                aria-label={`${
+                  index + 1
+                }번째 이미지`}
+              />
+            ),
+          )}
         </div>
       )}
     </section>

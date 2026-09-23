@@ -2,12 +2,17 @@
   width: 100%;
 
   margin-top: 40px;
-  padding: 34px 0 18px;
+  padding: 34px 0 16px;
+
+  overflow: hidden;
 
   background: #ffffff;
 
-  border-top: 1px solid #dfe4e8;
-  border-bottom: 1px solid #dfe4e8;
+  border-top:
+    1px solid #dfe4e8;
+
+  border-bottom:
+    1px solid #dfe4e8;
 }
 
 .viewport {
@@ -16,147 +21,220 @@
   width: 100%;
   height: 290px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   overflow: hidden;
 }
 
-/* 중앙 메인 이미지 */
-
-.mainSlide {
+.slide {
   position: absolute;
-  z-index: 3;
 
+  top: 50%;
   left: 50%;
-  top: 50%;
-
-  width: 46%;
-  max-width: 540px;
-  height: 250px;
-
-  overflow: hidden;
-
-  background: #f1f3f5;
-
-  border: 1px solid #d7dde2;
-  border-radius: 10px;
-
-  box-shadow:
-    0 8px 22px
-      rgba(
-        22,
-        34,
-        44,
-        0.08
-      );
-
-  transform:
-    translate(
-      -50%,
-      -50%
-    );
-}
-
-.mainImage {
-  object-fit: cover;
-
-  animation:
-    mainImageEnter
-    300ms ease;
-}
-
-/* 양쪽 이미지 */
-
-.sidePreview {
-  position: absolute;
-  z-index: 2;
-
-  top: 50%;
-
-  width: 20%;
-  max-width: 225px;
-  height: 176px;
 
   padding: 0;
 
   overflow: hidden;
 
-  background: #eceff1;
+  background: #edf1f4;
 
-  border: 0;
-  border-radius: 8px;
+  border:
+    1px solid #d6dde2;
 
-  cursor: pointer;
+  border-radius: 9px;
 
-  transform:
-    translateY(-50%);
+  box-shadow:
+    0 7px 20px
+      rgba(
+        22,
+        40,
+        53,
+        0.07
+      );
 
-  transition:
-    opacity 160ms ease,
-    transform 160ms ease;
-}
-
-.sidePreview:hover {
-  opacity: 1;
-
-  transform:
-    translateY(-50%)
-    scale(1.02);
-}
-
-.leftPreview {
-  left: 7.5%;
-}
-
-.rightPreview {
-  right: 7.5%;
-}
-
-.sideImage {
-  object-fit: cover;
-
-  filter:
-    saturate(0.72)
-    brightness(0.72);
+  cursor: default;
 
   transition:
-    filter 160ms ease,
-    transform 180ms ease;
-}
+    transform
+      620ms
+      cubic-bezier(
+        0.22,
+        0.75,
+        0.2,
+        1
+      ),
+    width 620ms
+      cubic-bezier(
+        0.22,
+        0.75,
+        0.2,
+        1
+      ),
+    height 620ms
+      cubic-bezier(
+        0.22,
+        0.75,
+        0.2,
+        1
+      ),
+    opacity 420ms ease,
+    filter 420ms ease,
+    box-shadow 420ms ease;
 
-.sidePreview:hover
-  .sideImage {
-  filter:
-    saturate(0.92)
-    brightness(0.82);
-
-  transform:
-    scale(1.02);
-}
-
-.sideOverlay {
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    rgba(
-      21,
-      29,
-      34,
-      0.12
-    );
+  will-change:
+    transform,
+    width,
+    height,
+    opacity;
 
   pointer-events: none;
 }
 
-/* 좌우 화살표 */
+.active {
+  z-index: 4;
+
+  width: 46%;
+  max-width: 540px;
+  height: 250px;
+
+  opacity: 1;
+
+  filter:
+    saturate(1)
+    brightness(1);
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    )
+    scale(1);
+
+  box-shadow:
+    0 12px 28px
+      rgba(
+        23,
+        53,
+        73,
+        0.1
+      );
+}
+
+.previous,
+.next {
+  z-index: 2;
+
+  width: 20%;
+  max-width: 225px;
+  height: 176px;
+
+  opacity: 0.72;
+
+  filter:
+    saturate(0.72)
+    brightness(0.76);
+
+  cursor: pointer;
+
+  pointer-events: auto;
+}
+
+.previous {
+  transform:
+    translate(
+      -215%,
+      -50%
+    )
+    scale(0.94);
+}
+
+.next {
+  transform:
+    translate(
+      115%,
+      -50%
+    )
+    scale(0.94);
+}
+
+.previous:hover,
+.next:hover {
+  opacity: 0.88;
+
+  filter:
+    saturate(0.88)
+    brightness(0.84);
+}
+
+.hiddenLeft,
+.hiddenRight {
+  z-index: 1;
+
+  width: 18%;
+  max-width: 200px;
+  height: 156px;
+
+  opacity: 0;
+
+  filter:
+    saturate(0.5)
+    brightness(0.65);
+}
+
+.hiddenLeft {
+  transform:
+    translate(
+      -360%,
+      -50%
+    )
+    scale(0.85);
+}
+
+.hiddenRight {
+  transform:
+    translate(
+      260%,
+      -50%
+    )
+    scale(0.85);
+}
+
+.image {
+  object-fit: cover;
+
+  transition:
+    transform 500ms ease;
+}
+
+.active:hover .image {
+  transform: scale(1.008);
+}
+
+.shade {
+  position: absolute;
+
+  inset: 0;
+
+  background: transparent;
+
+  pointer-events: none;
+
+  transition:
+    background 400ms ease;
+}
+
+.previous .shade,
+.next .shade {
+  background:
+    rgba(
+      18,
+      28,
+      35,
+      0.15
+    );
+}
 
 .arrow {
   position: absolute;
-  z-index: 5;
+  z-index: 8;
 
   top: 50%;
 
@@ -169,7 +247,8 @@
   align-items: center;
   justify-content: center;
 
-  color: #26323a;
+  color: #27343c;
+
   background: transparent;
 
   border: 0;
@@ -181,14 +260,19 @@
     translateY(-50%);
 
   transition:
+    background 140ms ease,
     color 140ms ease,
-    background 140ms ease;
+    transform 140ms ease;
 }
 
 .arrow:hover {
   color: #0b4fa3;
 
   background: #edf5fd;
+
+  transform:
+    translateY(-50%)
+    scale(1.05);
 }
 
 .arrowLeft {
@@ -199,50 +283,25 @@
   right: 0;
 }
 
-/* 페이지 표시 */
-
 .pagination {
-  min-height: 26px;
+  min-height: 24px;
 
-  margin-top: 8px;
+  margin-top: 7px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 9px;
-}
-
-.pageNumber,
-.totalNumber {
-  min-width: 14px;
-
-  color: #7a858d;
-
-  font-size: 10px;
-  font-weight: 700;
-
-  text-align: center;
-}
-
-.pageNumber {
-  color: #0b4fa3;
-}
-
-.pageDots {
-  display: flex;
-  align-items: center;
-
   gap: 5px;
 }
 
-.pageDots button {
-  width: 5px;
-  height: 5px;
+.pagination button {
+  width: 6px;
+  height: 6px;
 
   padding: 0;
 
-  background: #ccd4da;
+  background: #c6d1d8;
 
   border: 0;
   border-radius: 999px;
@@ -250,37 +309,17 @@
   cursor: pointer;
 
   transition:
-    width 180ms ease,
-    background 180ms ease;
+    width 240ms ease,
+    background 240ms ease;
 }
 
-.pageDots .activeDot {
-  width: 25px;
+.pagination .activeDot {
+  width: 27px;
 
   background: #2e8be6;
 }
 
-@keyframes mainImageEnter {
-  from {
-    opacity: 0.65;
-
-    transform:
-      scale(0.985);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      scale(1);
-  }
-}
-
-/* 태블릿 */
-
-@media (
-  max-width: 900px
-) {
+@media (max-width: 900px) {
   .gallery {
     margin-top: 32px;
     padding-top: 28px;
@@ -290,52 +329,65 @@
     height: 260px;
   }
 
-  .mainSlide {
-    width: 55%;
+  .active {
+    width: 56%;
     height: 225px;
   }
 
-  .sidePreview {
+  .previous,
+  .next {
     width: 22%;
-    height: 155px;
+    height: 158px;
   }
 
-  .leftPreview {
-    left: 5%;
+  .previous {
+    transform:
+      translate(
+        -230%,
+        -50%
+      )
+      scale(0.94);
   }
 
-  .rightPreview {
-    right: 5%;
+  .next {
+    transform:
+      translate(
+        130%,
+        -50%
+      )
+      scale(0.94);
   }
 }
 
-/* 모바일 */
-
-@media (
-  max-width: 640px
-) {
+@media (max-width: 640px) {
   .gallery {
     margin-top: 26px;
-    padding: 18px 0 12px;
+    padding: 16px 0 10px;
   }
 
   .viewport {
-    height: 225px;
+    height: 220px;
   }
 
-  .mainSlide {
+  .active {
     width: calc(
-      100% - 48px
+      100% - 44px
     );
 
     max-width: none;
+
     height: 205px;
 
     border-radius: 9px;
   }
 
-  .sidePreview {
-    display: none;
+  .previous,
+  .next,
+  .hiddenLeft,
+  .hiddenRight {
+    opacity: 0;
+
+    pointer-events: none;
   }
 
   .arrow {
@@ -347,13 +399,10 @@
     background:
       rgba(
         15,
-        27,
-        35,
+        28,
+        36,
         0.52
       );
-
-    backdrop-filter:
-      blur(6px);
   }
 
   .arrow:hover {
@@ -362,21 +411,17 @@
     background:
       rgba(
         15,
-        27,
-        35,
+        28,
+        36,
         0.72
       );
   }
 
   .arrowLeft {
-    left: 31px;
+    left: 28px;
   }
 
   .arrowRight {
-    right: 31px;
-  }
-
-  .pagination {
-    margin-top: 5px;
+    right: 28px;
   }
 }
