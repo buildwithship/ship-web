@@ -1,10 +1,16 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
+
 import { ArrowUp, Eye, Users } from 'lucide-react';
 
 import PlatformLinks from './PlatformLinks';
+
 import { Project } from '@/types/project';
+
+import styles from './ProjectCard.module.css';
 
 interface ProjectCardProps {
   project: Project;
@@ -15,9 +21,7 @@ function formatCount(value: number) {
     return value.toString();
   }
 
-  const formatted = (value / 1000).toFixed(1);
-
-  return `${formatted.replace('.0', '')}K`;
+  return `${(value / 1000).toFixed(1).replace('.0', '')}K`;
 }
 
 export default function ProjectCard({
@@ -25,103 +29,93 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   const [isPushed, setIsPushed] = useState(false);
 
-  const currentPushCount =
+  const pushCount =
     project.pushCount + (isPushed ? 1 : 0);
 
   return (
-    <article className="project-card">
-      <a
-        href={`#${project.slug}`}
-        className={`project-card__visual project-card__visual--${project.visualVariant}`}
-        aria-label={`${project.name} 프로젝트 보기`}
+    <article className={styles.card}>
+      <Link
+        href={`/projects/${project.slug}`}
+        className={styles.imageWrap}
       >
-        <div className="project-preview">
-          <div className="project-preview__topbar">
-            <span />
-            <span />
-            <span />
-          </div>
-
-          <div className="project-preview__content">
-            <div className="project-preview__eyebrow">
-              SHIPPED PROJECT
-            </div>
-
-            <strong>{project.name}</strong>
-
-            <div className="project-preview__line project-preview__line--large" />
-            <div className="project-preview__line" />
-            <div className="project-preview__line project-preview__line--short" />
-          </div>
-        </div>
+        <Image
+          src={project.bannerUrl}
+          alt={`${project.name} 프로젝트`}
+          fill
+          sizes="
+            (max-width: 640px) 100vw,
+            (max-width: 1100px) 50vw,
+            33vw
+          "
+          className={styles.banner}
+        />
 
         {project.recruiting && (
-          <div className="project-card__recruiting">
+          <span className={styles.recruiting}>
             <Users size={13} strokeWidth={2} />
             팀원 모집 중
-          </div>
+          </span>
         )}
-      </a>
+      </Link>
 
-      <div className="project-card__body">
-        <div className="project-card__heading">
-          <div className="project-card__identity">
-            <div className="project-logo">
-              {project.name.slice(0, 1)}
-            </div>
+      <div className={styles.body}>
+        <div className={styles.identity}>
+          <Image
+            src={project.logoUrl}
+            alt={`${project.name} 로고`}
+            width={42}
+            height={42}
+            className={styles.logo}
+          />
 
-            <div>
-              <a
-                href={`#${project.slug}`}
-                className="project-card__name"
-              >
-                {project.name}
-              </a>
+          <div className={styles.titleArea}>
+            <Link
+              href={`/projects/${project.slug}`}
+              className={styles.name}
+            >
+              {project.name}
+            </Link>
 
-              <p className="project-card__tagline">
-                {project.tagline}
-              </p>
-            </div>
+            <p>{project.tagline}</p>
           </div>
         </div>
 
-        <div className="project-card__tags">
+        <div className={styles.tags}>
           {project.categories.map((category) => (
-            <span key={category} className="tag">
+            <span key={category}>
               {category}
             </span>
           ))}
         </div>
 
-        <div className="project-card__meta">
-          <div className="project-card__stats">
+        <div className={styles.meta}>
+          <div className={styles.stats}>
             <button
               type="button"
-              className={`push-button ${
-                isPushed ? 'push-button--active' : ''
+              className={`${styles.push} ${
+                isPushed ? styles.pushActive : ''
               }`}
-              onClick={() => setIsPushed((prev) => !prev)}
+              onClick={() => {
+                setIsPushed((prev) => !prev);
+              }}
               aria-pressed={isPushed}
             >
               <ArrowUp size={16} strokeWidth={2.2} />
-              <span>{formatCount(currentPushCount)}</span>
+              {formatCount(pushCount)}
             </button>
 
-            <div className="project-stat">
+            <span className={styles.view}>
               <Eye size={16} strokeWidth={1.8} />
-              <span>{formatCount(project.viewCount)}</span>
-            </div>
+              {formatCount(project.viewCount)}
+            </span>
           </div>
 
           <PlatformLinks links={project.platforms} />
         </div>
 
-        <a
-          href={`#maker-${project.maker.username}`}
-          className="project-card__maker"
-        >
+        <span className={styles.maker}>
           by {project.maker.name}
-        </a>
+        </span>
       </div>
     </article>
   );

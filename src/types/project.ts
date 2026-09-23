@@ -10,26 +10,27 @@ export interface ProjectMaker {
   username: string;
 }
 
-export type ProjectVisualVariant =
-  | 'ocean'
-  | 'sky'
-  | 'deep'
-  | 'wave'
-  | 'mist'
-  | 'harbor';
-
 export interface Project {
   id: number;
   slug: string;
+
   name: string;
   tagline: string;
   description: string;
+
+  logoUrl: string;
+  bannerUrl: string;
+
   categories: string[];
+
   maker: ProjectMaker;
+
   pushCount: number;
   viewCount: number;
+  teamSize: number;
+
   recruiting: boolean;
+  spotlight?: boolean;
+
   platforms: ProjectLink[];
-  visualVariant: ProjectVisualVariant;
-  featured?: boolean;
 }
