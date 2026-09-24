@@ -6,15 +6,30 @@ import { usePathname } from 'next/navigation';
 
 import {
   Bell,
+  ChevronDown,
   Home,
   LayoutGrid,
   Plus,
   Search,
+  UserRound,
   UserRoundSearch,
   Users,
 } from 'lucide-react';
 
+import {
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+
 import AdBanner from '@/components/common/AdBanner';
+import NotificationPanel from '@/components/notification/NotificationPanel';
+
+import {
+  notifications as initialNotifications,
+} from '@/mocks/notifications';
+
+import { ShipNotification } from '@/types/notification';
 
 import styles from './AppShell.module.css';
 
@@ -86,13 +101,139 @@ function ShipMark() {
   );
 }
 
+function getPageInfo(
+  pathname: string,
+) {
+  if (pathname === '/') {
+    return {
+      title: '홈',
+      description:
+        '새로운 프로젝트를 발견해보세요.',
+    };
+  }
+
+  if (pathname === '/projects') {
+    return {
+      title: '프로젝트',
+      description:
+        '만들어진 서비스를 둘러보세요.',
+    };
+  }
+
+  if (
+    pathname.startsWith(
+      '/projects/new',
+    )
+  ) {
+    return {
+      title: '프로젝트 등록',
+      description:
+        '새로운 프로젝트를 등록하세요.',
+    };
+  }
+
+  if (
+    pathname.startsWith(
+      '/projects/',
+    )
+  ) {
+    return {
+      title: '프로젝트 상세',
+      description:
+        '프로젝트 정보를 확인해보세요.',
+    };
+  }
+
+  if (pathname === '/makers') {
+    return {
+      title: '메이커',
+      description:
+        '프로젝트를 만드는 사람들을 만나보세요.',
+    };
+  }
+
+  if (
+    pathname.startsWith(
+      '/makers/',
+    )
+  ) {
+    return {
+      title: '메이커 프로필',
+      description:
+        '메이커의 프로젝트를 확인해보세요.',
+    };
+  }
+
+  if (pathname === '/recruiting') {
+    return {
+      title: '팀원 모집',
+      description:
+        '함께할 프로젝트를 찾아보세요.',
+    };
+  }
+
+  if (
+    pathname.startsWith(
+      '/applications',
+    )
+  ) {
+    return {
+      title: '지원 관리',
+      description:
+        '지원 현황을 확인하고 관리하세요.',
+    };
+  }
+
+  return {
+    title: 'SHIP',
+    description:
+      '프로젝트와 메이커를 연결합니다.',
+  };
+}
+
 export default function AppShell({
   children,
 }: AppShellProps) {
   const pathname = usePathname();
 
+  const [
+    profileOpen,
+    setProfileOpen,
+  ] = useState(false);
+
+  const [
+    notificationOpen,
+    setNotificationOpen,
+  ] = useState(false);
+
+  const [
+    notifications,
+    setNotifications,
+  ] = useState<
+    ShipNotification[]
+  >(initialNotifications);
+
+  const profileRef =
+    useRef<HTMLDivElement | null>(
+      null,
+    );
+
+  const notificationRef =
+    useRef<HTMLDivElement | null>(
+      null,
+    );
+
+  const pageInfo =
+    getPageInfo(pathname);
+
   const showAd =
     adPages.includes(pathname);
+
+  const unreadCount =
+    notifications.filter(
+      (notification) =>
+        !notification.read,
+    ).length;
 
   const isActive = (
     href: string,
@@ -106,22 +247,95 @@ export default function AppShell({
     );
   };
 
+  useEffect(() => {
+    const handleClickOutside = (
+      event: MouseEvent,
+    ) => {
+      const target =
+        event.target as Node;
+
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(
+          target,
+        )
+      ) {
+        setProfileOpen(false);
+      }
+
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(
+          target,
+        )
+      ) {
+        setNotificationOpen(
+          false,
+        );
+      }
+    };
+
+    window.addEventListener(
+      'mousedown',
+      handleClickOutside,
+    );
+
+    return () => {
+      window.removeEventListener(
+        'mousedown',
+        handleClickOutside,
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    setProfileOpen(false);
+    setNotificationOpen(false);
+  }, [pathname]);
+
+  const handleReadNotification = (
+    id: number,
+  ) => {
+    setNotifications(
+      (prev) =>
+        prev.map(
+          (notification) =>
+            notification.id === id
+              ? {
+                  ...notification,
+                  read: true,
+                }
+              : notification,
+        ),
+    );
+  };
+
+  const handleReadAll = () => {
+    setNotifications(
+      (prev) =>
+        prev.map(
+          (notification) => ({
+            ...notification,
+            read: true,
+          }),
+        ),
+    );
+  };
+
   return (
     <div className={styles.shell}>
-      <aside
-        className={styles.sidebar}
-      >
+      <aside className={styles.sidebar}>
         <Link
           href="/"
           className={styles.brand}
         >
-          <span
-            className={styles.logo}
-          >
+          <span className={styles.logo}>
             <ShipMark />
           </span>
 
-          <strong>SHIP</strong>
+          <strong>
+            SHIP
+          </strong>
         </Link>
 
         <nav
@@ -151,7 +365,9 @@ export default function AppShell({
                     strokeWidth={2}
                   />
 
-                  {item.label}
+                  <span>
+                    {item.label}
+                  </span>
                 </Link>
               );
             },
@@ -169,7 +385,11 @@ export default function AppShell({
               styles.shipButton
             }
           >
-            <Plus size={18} />
+            <Plus
+              size={18}
+              strokeWidth={2.2}
+            />
+
             프로젝트 올리기
           </Link>
         </div>
@@ -181,80 +401,293 @@ export default function AppShell({
         }
       >
         <header
-          className={styles.topbar}
+          className={
+            styles.topbar
+          }
         >
           <div
             className={
-              styles.mobileBrand
+              styles.topbarInner
             }
           >
-            <Link href="/">
-              <span
+            <div
+              className={
+                styles.pageIdentity
+              }
+            >
+              <div
                 className={
-                  styles.logo
+                  styles.mobileBrand
                 }
               >
-                <ShipMark />
-              </span>
+                <Link href="/">
+                  <span
+                    className={
+                      styles.logo
+                    }
+                  >
+                    <ShipMark />
+                  </span>
 
-              <strong>
-                SHIP
-              </strong>
-            </Link>
-          </div>
+                  <strong>
+                    SHIP
+                  </strong>
+                </Link>
+              </div>
 
-          <div
-            className={
-              styles.topbarActions
-            }
-          >
-            <button
-              type="button"
+              <div
+                className={
+                  styles.pageText
+                }
+              >
+                <strong>
+                  {
+                    pageInfo.title
+                  }
+                </strong>
+
+                <span>
+                  {
+                    pageInfo.description
+                  }
+                </span>
+              </div>
+            </div>
+
+            <label
               className={
-                styles.iconButton
+                styles.searchBar
               }
-              aria-label="검색"
             >
               <Search
-                size={20}
+                size={17}
+                strokeWidth={2}
               />
-            </button>
 
-            <button
-              type="button"
-              className={
-                styles.iconButton
-              }
-              aria-label="알림"
-            >
-              <Bell
-                size={20}
+              <input
+                type="search"
+                placeholder="프로젝트, 메이커 검색"
+                aria-label="통합 검색"
               />
-            </button>
+            </label>
 
-            <Link
-              href="/makers/uptomaster"
+            <div
               className={
-                styles.profile
+                styles.topbarActions
               }
             >
-              <Image
-                src="/images/makers/uptomaster.jpg"
-                alt="내 프로필"
-                width={34}
-                height={34}
-              />
-            </Link>
+              <Link
+                href="/applications"
+                className={
+                  styles.applicationButton
+                }
+              >
+                <UserRoundSearch
+                  size={17}
+                  strokeWidth={2}
+                />
 
-            <Link
-              href="/projects/new"
-              className={
-                styles.mobileUpload
-              }
-            >
-              <Plus size={17} />
-              올리기
-            </Link>
+                <span>
+                  지원 관리
+                </span>
+              </Link>
+
+              <div
+                ref={
+                  notificationRef
+                }
+                className={
+                  styles.notificationWrap
+                }
+              >
+                <button
+                  type="button"
+                  className={
+                    styles.notificationButton
+                  }
+                  aria-label="알림"
+                  aria-expanded={
+                    notificationOpen
+                  }
+                  onClick={() => {
+                    setNotificationOpen(
+                      (prev) =>
+                        !prev,
+                    );
+
+                    setProfileOpen(
+                      false,
+                    );
+                  }}
+                >
+                  <Bell
+                    size={20}
+                    strokeWidth={2}
+                  />
+
+                  {unreadCount > 0 && (
+                    <span
+                      className={
+                        styles.notificationBadge
+                      }
+                    >
+                      {unreadCount > 9
+                        ? '9+'
+                        : unreadCount}
+                    </span>
+                  )}
+                </button>
+
+                {notificationOpen && (
+                  <NotificationPanel
+                    notifications={
+                      notifications
+                    }
+                    onRead={
+                      handleReadNotification
+                    }
+                    onReadAll={
+                      handleReadAll
+                    }
+                    onClose={() =>
+                      setNotificationOpen(
+                        false,
+                      )
+                    }
+                  />
+                )}
+              </div>
+
+              <div
+                ref={profileRef}
+                className={
+                  styles.profileWrap
+                }
+              >
+                <button
+                  type="button"
+                  className={
+                    styles.profileButton
+                  }
+                  onClick={() => {
+                    setProfileOpen(
+                      (prev) =>
+                        !prev,
+                    );
+
+                    setNotificationOpen(
+                      false,
+                    );
+                  }}
+                  aria-expanded={
+                    profileOpen
+                  }
+                >
+                  <Image
+                    src="/images/makers/uptomaster.jpg"
+                    alt="이남혁 프로필"
+                    width={36}
+                    height={36}
+                    className={
+                      styles.profileImage
+                    }
+                  />
+
+                  <span
+                    className={
+                      styles.profileText
+                    }
+                  >
+                    <strong>
+                      이남혁
+                    </strong>
+
+                    <small>
+                      @uptomaster
+                    </small>
+                  </span>
+
+                  <ChevronDown
+                    size={15}
+                    strokeWidth={2}
+                    className={
+                      profileOpen
+                        ? styles.chevronOpen
+                        : undefined
+                    }
+                  />
+                </button>
+
+                {profileOpen && (
+                  <div
+                    className={
+                      styles.profileMenu
+                    }
+                  >
+                    <div
+                      className={
+                        styles.profileMenuHeader
+                      }
+                    >
+                      <Image
+                        src="/images/makers/uptomaster.jpg"
+                        alt="이남혁"
+                        width={42}
+                        height={42}
+                      />
+
+                      <div>
+                        <strong>
+                          이남혁
+                        </strong>
+
+                        <span>
+                          @uptomaster
+                        </span>
+                      </div>
+                    </div>
+
+                    <div
+                      className={
+                        styles.profileMenuDivider
+                      }
+                    />
+
+                    <Link
+                      href="/makers/uptomaster"
+                    >
+                      <UserRound
+                        size={17}
+                      />
+
+                      내 프로필
+                    </Link>
+
+                    <Link
+                      href="/applications"
+                    >
+                      <UserRoundSearch
+                        size={17}
+                      />
+
+                      지원 관리
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href="/projects/new"
+                className={
+                  styles.mobileUpload
+                }
+                aria-label="프로젝트 올리기"
+              >
+                <Plus
+                  size={18}
+                />
+              </Link>
+            </div>
           </div>
 
           <nav
@@ -282,9 +715,7 @@ export default function AppShell({
           </nav>
         </header>
 
-        <div
-          className={styles.main}
-        >
+        <div className={styles.main}>
           <div
             className={
               styles.content
