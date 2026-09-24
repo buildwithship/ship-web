@@ -41,14 +41,14 @@
 .summary span {
   color: #6b7982;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 650;
 }
 
 .summary strong {
   color: #182229;
 
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1;
 
   font-weight: 800;
@@ -95,7 +95,7 @@
 
   cursor: pointer;
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 750;
 }
 
@@ -138,7 +138,7 @@
 
   border-radius: 999px;
 
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 800;
 }
 
@@ -178,7 +178,7 @@
   border: 0;
   outline: none;
 
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .search input::placeholder {
@@ -221,7 +221,7 @@
 
   cursor: pointer;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
 }
 
@@ -258,7 +258,7 @@
 .resultHeading strong {
   color: #19242b;
 
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
 
   letter-spacing:
@@ -268,7 +268,7 @@
 .resultHeading span {
   color: #267dbd;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -363,7 +363,7 @@
 }
 
 .projectTitleRow strong {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
 }
 
@@ -378,7 +378,7 @@
 
   color: #53646f;
 
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
 
   font-weight: 550;
@@ -399,7 +399,7 @@
 
   border-radius: 7px;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -459,7 +459,7 @@
 
   border-radius: 7px;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -500,7 +500,7 @@
 
   color: #75838c;
 
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
 }
 
@@ -509,7 +509,7 @@
 
   color: #374851;
 
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.65;
 
   font-weight: 500;
@@ -527,7 +527,7 @@
 
   color: #176db0;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 750;
 }
 
@@ -578,7 +578,7 @@
 
   color: #24363f;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -587,7 +587,7 @@
 
   color: #60717b;
 
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -610,7 +610,7 @@
 
   border-radius: 8px;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -660,7 +660,7 @@
 
   color: #7a8891;
 
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 650;
 }
 
@@ -673,7 +673,7 @@
 
   color: #344650;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 
   text-overflow: ellipsis;
@@ -709,7 +709,7 @@
 
   cursor: pointer;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -790,7 +790,7 @@
 .empty strong {
   color: #2e3d46;
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -799,7 +799,7 @@
 
   color: #77858e;
 
-  font-size: 11px;
+  font-size: 13px;
 }
 
 /* Responsive */

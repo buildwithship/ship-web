@@ -1,191 +1,313 @@
 .links {
-  width: 100%;
-  min-width: 0;
-  height: 42px;
-
   display: flex;
   align-items: center;
+  flex-wrap: nowrap;
 
-  gap: 8px;
+  gap: 6px;
 
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  white-space: nowrap;
-
-  scrollbar-width: none;
+  width: fit-content;
+  max-width: 100%;
 }
 
-.links::-webkit-scrollbar {
-  display: none;
-}
+/* =========================================
+   공통 Store Link
+   공식 배지 자체에 테두리가 있으므로
+   wrapper에는 배경 / 테두리 / clipping 금지
+========================================= */
 
 .storeLink {
-  height: 40px;
+  position: relative;
+
+  height: 30px;
 
   flex: 0 0 auto;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
+  padding: 0;
+  margin: 0;
+
+  color: inherit;
+  background: transparent;
+
+  border: 0;
+  border-radius: 0;
+
+  text-decoration: none;
+
+  line-height: 0;
+
+  cursor: pointer;
+
   transition:
-    transform 140ms ease,
-    opacity 140ms ease;
+    opacity 140ms ease,
+    transform 140ms ease;
 }
 
 .storeLink:hover {
+  opacity: 0.82;
+
   transform: translateY(-1px);
-
-  opacity: 0.9;
 }
 
-/* App Store */
+.storeLink:focus-visible {
+  outline: 2px solid #8abce0;
+  outline-offset: 3px;
 
-.appStoreFrame {
-  width: 120px;
-  height: 40px;
-
-  flex: 0 0 auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
-  border-radius: 6px;
+  border-radius: 5px;
 }
+
+/* =========================================
+   App Store
+
+   Apple 배지는 이미지 자체의 비율을 그대로 사용
+========================================= */
 
 .appStoreBadge {
-  width: 120px;
-  height: 40px;
-
   display: block;
+
+  width: auto;
+  height: 30px;
+
+  max-width: none;
+
+  margin: 0;
+  padding: 0;
 
   object-fit: contain;
 
-  pointer-events: none;
+  border: 0;
 }
 
-/* Google Play */
+/* =========================================
+   Google Play
 
-.googlePlayFrame {
-  position: relative;
+   Google 공식 배지 PNG에는 이미지 바깥쪽에
+   자체 투명 여백이 들어있어서
+   같은 height를 주면 실제 검정 버튼이 더 작아 보임.
 
-  width: 135px;
-  height: 40px;
-
-  flex: 0 0 auto;
-
-  display: block;
-
-  overflow: hidden;
-
-  border-radius: 6px;
-}
+   transform 대신 이미지 높이 자체만 조금 키우고
+   음수 margin으로 외부 레이아웃 크기는 맞춘다.
+========================================= */
 
 .googlePlayBadge {
-  position: absolute;
-
-  top: 50%;
-  left: 50%;
-
-  width: 154px;
-  height: auto;
-
   display: block;
 
-  transform:
-    translate(-50%, -50%);
+  width: auto;
+  height: 36px;
 
-  pointer-events: none;
+  max-width: none;
+
+  margin:
+    -3px
+    -5px;
+
+  padding: 0;
+
+  object-fit: contain;
+
+  border: 0;
 }
 
-/* Website */
+/* =========================================
+   Website
 
-.website {
-  width: 110px;
-  height: 40px;
+   공식 스토어 배지와 시각적으로 맞추되
+   CSS로 직접 만드는 버튼
+========================================= */
 
-  padding: 0 11px;
+.websiteLink {
+  height: 30px;
 
   flex: 0 0 auto;
 
+  padding:
+    0
+    10px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  gap: 7px;
+  gap: 5px;
 
   color: #ffffff;
+  background: #000000;
 
-  background:
-    linear-gradient(
-      135deg,
-      #46a1e8 0%,
-      #1475c6 100%
-    );
+  border:
+    1px solid #303030;
 
-  border: 1px solid
-    rgba(12, 102, 180, 0.18);
+  border-radius: 6px;
 
-  border-radius: 7px;
-
-  box-shadow:
-    0 4px 12px
-      rgba(39, 135, 211, 0.15);
+  box-sizing: border-box;
 
   font-size: 12px;
-  font-weight: 800;
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: -0.01em;
+
+  white-space: nowrap;
+
+  text-decoration: none;
+
+  cursor: pointer;
 
   transition:
-    transform 140ms ease,
-    box-shadow 140ms ease;
+    opacity 140ms ease,
+    transform 140ms ease;
 }
 
-.website:hover {
+.websiteLink span {
+  display: block;
+
+  line-height: 1;
+}
+
+.websiteLink svg {
+  width: 12px;
+  height: 12px;
+
+  flex: 0 0 auto;
+
+  stroke-width: 2;
+}
+
+.websiteLink:hover {
+  opacity: 0.82;
+
   transform: translateY(-1px);
-
-  box-shadow:
-    0 7px 17px
-      rgba(39, 135, 211, 0.23);
 }
 
-.websiteIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.websiteLink:focus-visible {
+  outline: 2px solid #8abce0;
+  outline-offset: 3px;
 }
 
-@media (max-width: 560px) {
+/* =========================================
+   Compact
+   프로젝트 카드 하단 전용
+========================================= */
+
+.compact {
+  gap: 5px;
+}
+
+.compact .storeLink {
+  height: 27px;
+}
+
+.compact .appStoreBadge {
+  height: 27px;
+}
+
+.compact .googlePlayBadge {
+  height: 33px;
+
+  margin:
+    -3px
+    -5px;
+}
+
+.compact .websiteLink {
+  height: 27px;
+
+  padding:
+    0
+    9px;
+
+  gap: 4px;
+
+  border-radius: 5px;
+
+  font-size: 11px;
+}
+
+.compact .websiteLink svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* =========================================
+   Tablet
+========================================= */
+
+@media (max-width: 900px) {
   .links {
-    gap: 6px;
+    gap: 5px;
+  }
+}
+
+/* =========================================
+   Mobile
+
+   억지로 줄바꿈하지 않고,
+   카드 footer 쪽에서 공간을 확보하도록 유지
+========================================= */
+
+@media (max-width: 580px) {
+  .links {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    gap: 5px;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
   }
 
-  .appStoreFrame {
-    width: 114px;
-    height: 38px;
+  .links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .storeLink {
+    height: 27px;
   }
 
   .appStoreBadge {
-    width: 114px;
-    height: 38px;
-  }
-
-  .googlePlayFrame {
-    width: 128px;
-    height: 38px;
+    height: 27px;
   }
 
   .googlePlayBadge {
-    width: 146px;
+    height: 33px;
+
+    margin:
+      -3px
+      -5px;
   }
 
-  .website {
-    width: 104px;
-    height: 38px;
+  .websiteLink {
+    height: 27px;
 
-    padding: 0 9px;
+    padding:
+      0
+      9px;
+
+    font-size: 11px;
+  }
+
+  .compact .storeLink {
+    height: 27px;
+  }
+
+  .compact .appStoreBadge {
+    height: 27px;
+  }
+
+  .compact .googlePlayBadge {
+    height: 33px;
+
+    margin:
+      -3px
+      -5px;
+  }
+
+  .compact .websiteLink {
+    height: 27px;
   }
 }

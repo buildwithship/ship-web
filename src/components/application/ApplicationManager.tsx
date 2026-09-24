@@ -14,7 +14,6 @@ import {
   UserCheck,
   Users,
   X,
-  XCircle,
 } from 'lucide-react';
 
 import {
@@ -219,9 +218,7 @@ function ApplicationCard({
         </span>
 
         <span
-          className={
-            styles.date
-          }
+          className={styles.date}
         >
           <Clock3
             size={14}
@@ -290,15 +287,13 @@ function ApplicationCard({
 
             <div>
               <strong>
-                {direction ===
-                'sent'
+                {direction === 'sent'
                   ? 'CREW 합류 요청이 도착했어요'
                   : 'CREW 합류 요청을 보냈어요'}
               </strong>
 
               <p>
-                {direction ===
-                'sent'
+                {direction === 'sent'
                   ? '합류를 확정하면 프로젝트 멤버로 등록되고 프로필에도 표시됩니다.'
                   : '지원자가 최종 수락하면 프로젝트의 CREW로 등록됩니다.'}
               </p>
@@ -329,9 +324,7 @@ function ApplicationCard({
       >
         <Link
           href={`/makers/${counterpart.username}`}
-          className={
-            styles.user
-          }
+          className={styles.user}
         >
           <Image
             src={
@@ -713,13 +706,8 @@ export default function ApplicationManager() {
                 : undefined
             }
             onClick={() => {
-              setActiveTab(
-                'sent',
-              );
-
-              setStatusFilter(
-                'all',
-              );
+              setActiveTab('sent');
+              setStatusFilter('all');
             }}
           >
             내 지원
@@ -778,8 +766,7 @@ export default function ApplicationManager() {
             value={keyword}
             onChange={(event) =>
               setKeyword(
-                event.target
-                  .value,
+                event.target.value,
               )
             }
             placeholder="프로젝트, 포지션, 이름 검색"
@@ -836,9 +823,7 @@ export default function ApplicationManager() {
 
       {filteredApplications.length >
       0 ? (
-        <div
-          className={styles.list}
-        >
+        <div className={styles.list}>
           {filteredApplications.map(
             (application) => (
               <ApplicationCard
@@ -871,9 +856,7 @@ export default function ApplicationManager() {
           )}
         </div>
       ) : (
-        <div
-          className={styles.empty}
-        >
+        <div className={styles.empty}>
           <div
             className={
               styles.emptyIcon
@@ -892,14 +875,11 @@ export default function ApplicationManager() {
           </div>
 
           <strong>
-            {activeTab === 'sent'
-              ? '조건에 맞는 지원 내역이 없어요.'
-              : '조건에 맞는 받은 지원이 없어요.'}
+            조건에 맞는 지원 내역이 없어요.
           </strong>
 
           <p>
-            필터나 검색어를
-            변경해보세요.
+            필터나 검색어를 변경해보세요.
           </p>
         </div>
       )}

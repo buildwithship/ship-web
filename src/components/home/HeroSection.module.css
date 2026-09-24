@@ -22,7 +22,7 @@
 
   color: var(--brand-primary);
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 
   letter-spacing: 0.09em;
@@ -48,7 +48,7 @@
 
   color: var(--text-secondary);
 
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.7;
 
   font-weight: 500;

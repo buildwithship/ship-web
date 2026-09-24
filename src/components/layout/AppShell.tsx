@@ -10,7 +10,6 @@ import {
   Home,
   LayoutGrid,
   Plus,
-  Search,
   UserRound,
   UserRoundSearch,
   Users,
@@ -22,8 +21,11 @@ import {
   useState,
 } from 'react';
 
+import RealtimeRanking from '@/components/browse/RealtimeRanking';
+import CommunityRail from '@/components/browse/CommunityRail';
 import AdBanner from '@/components/common/AdBanner';
 import NotificationPanel from '@/components/notification/NotificationPanel';
+import HeaderSearch from '@/components/search/HeaderSearch';
 
 import {
   notifications as initialNotifications,
@@ -60,7 +62,7 @@ const navigation = [
   },
 ];
 
-const adPages = [
+const browsePages = [
   '/',
   '/projects',
   '/makers',
@@ -226,8 +228,8 @@ export default function AppShell({
   const pageInfo =
     getPageInfo(pathname);
 
-  const showAd =
-    adPages.includes(pathname);
+  const isBrowsePage =
+    browsePages.includes(pathname);
 
   const unreadCount =
     notifications.filter(
@@ -269,9 +271,7 @@ export default function AppShell({
           target,
         )
       ) {
-        setNotificationOpen(
-          false,
-        );
+        setNotificationOpen(false);
       }
     };
 
@@ -287,11 +287,6 @@ export default function AppShell({
       );
     };
   }, []);
-
-  useEffect(() => {
-    setProfileOpen(false);
-    setNotificationOpen(false);
-  }, [pathname]);
 
   const handleReadNotification = (
     id: number,
@@ -322,20 +317,24 @@ export default function AppShell({
     );
   };
 
+  const closeMenus = () => {
+    setProfileOpen(false);
+    setNotificationOpen(false);
+  };
+
   return (
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <Link
           href="/"
           className={styles.brand}
+          onClick={closeMenus}
         >
           <span className={styles.logo}>
             <ShipMark />
           </span>
 
-          <strong>
-            SHIP
-          </strong>
+          <strong>SHIP</strong>
         </Link>
 
         <nav
@@ -352,6 +351,7 @@ export default function AppShell({
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={closeMenus}
                   className={
                     isActive(
                       item.href,
@@ -384,10 +384,11 @@ export default function AppShell({
             className={
               styles.shipButton
             }
+            onClick={closeMenus}
           >
             <Plus
               size={18}
-              strokeWidth={2.2}
+              strokeWidth={2}
             />
 
             프로젝트 올리기
@@ -420,7 +421,12 @@ export default function AppShell({
                   styles.mobileBrand
                 }
               >
-                <Link href="/">
+                <Link
+                  href="/"
+                  onClick={
+                    closeMenus
+                  }
+                >
                   <span
                     className={
                       styles.logo
@@ -441,9 +447,7 @@ export default function AppShell({
                 }
               >
                 <strong>
-                  {
-                    pageInfo.title
-                  }
+                  {pageInfo.title}
                 </strong>
 
                 <span>
@@ -454,22 +458,7 @@ export default function AppShell({
               </div>
             </div>
 
-            <label
-              className={
-                styles.searchBar
-              }
-            >
-              <Search
-                size={17}
-                strokeWidth={2}
-              />
-
-              <input
-                type="search"
-                placeholder="프로젝트, 메이커 검색"
-                aria-label="통합 검색"
-              />
-            </label>
+            <HeaderSearch />
 
             <div
               className={
@@ -480,6 +469,9 @@ export default function AppShell({
                 href="/applications"
                 className={
                   styles.applicationButton
+                }
+                onClick={
+                  closeMenus
                 }
               >
                 <UserRoundSearch
@@ -506,9 +498,6 @@ export default function AppShell({
                     styles.notificationButton
                   }
                   aria-label="알림"
-                  aria-expanded={
-                    notificationOpen
-                  }
                   onClick={() => {
                     setNotificationOpen(
                       (prev) =>
@@ -579,13 +568,10 @@ export default function AppShell({
                       false,
                     );
                   }}
-                  aria-expanded={
-                    profileOpen
-                  }
                 >
                   <Image
                     src="/images/makers/uptomaster.jpg"
-                    alt="이남혁 프로필"
+                    alt="이남혁"
                     width={36}
                     height={36}
                     className={
@@ -655,6 +641,9 @@ export default function AppShell({
 
                     <Link
                       href="/makers/uptomaster"
+                      onClick={
+                        closeMenus
+                      }
                     >
                       <UserRound
                         size={17}
@@ -665,6 +654,9 @@ export default function AppShell({
 
                     <Link
                       href="/applications"
+                      onClick={
+                        closeMenus
+                      }
                     >
                       <UserRoundSearch
                         size={17}
@@ -675,59 +667,47 @@ export default function AppShell({
                   </div>
                 )}
               </div>
-
-              <Link
-                href="/projects/new"
-                className={
-                  styles.mobileUpload
-                }
-                aria-label="프로젝트 올리기"
-              >
-                <Plus
-                  size={18}
-                />
-              </Link>
             </div>
           </div>
-
-          <nav
-            className={
-              styles.mobileNavigation
-            }
-          >
-            {navigation.map(
-              (item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={
-                    isActive(
-                      item.href,
-                    )
-                      ? styles.mobileActive
-                      : undefined
-                  }
-                >
-                  {item.label}
-                </Link>
-              ),
-            )}
-          </nav>
         </header>
 
-        <div className={styles.main}>
-          <div
-            className={
-              styles.content
-            }
-          >
-            {showAd && (
-              <AdBanner />
-            )}
+        <main className={styles.main}>
+          {isBrowsePage ? (
+            <div
+              className={
+                styles.browseLayout
+              }
+            >
+              <div
+                className={
+                  styles.centerColumn
+                }
+              >
+                <AdBanner />
 
-            {children}
-          </div>
-        </div>
+                {children}
+              </div>
+
+              <aside
+                className={
+                  styles.rightRail
+                }
+              >
+                <RealtimeRanking />
+
+                <CommunityRail />
+              </aside>
+            </div>
+          ) : (
+            <div
+              className={
+                styles.normalContent
+              }
+            >
+              {children}
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );

@@ -4,19 +4,24 @@
   background: #ffffff;
 }
 
-/* Sidebar */
+/* =========================
+   Sidebar
+========================= */
 
 .sidebar {
   position: fixed;
   z-index: 70;
 
   top: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
 
   width: 212px;
 
-  padding: 24px 18px 20px;
+  padding:
+    24px
+    18px
+    20px;
 
   display: flex;
   flex-direction: column;
@@ -30,7 +35,7 @@
 .brand {
   height: 42px;
 
-  display: inline-flex;
+  display: flex;
   align-items: center;
 
   gap: 10px;
@@ -39,7 +44,7 @@
 }
 
 .brand strong {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 800;
 }
 
@@ -47,7 +52,7 @@
   width: 32px;
   height: 32px;
 
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
 
@@ -60,7 +65,7 @@
 }
 
 .navigation {
-  margin-top: 35px;
+  margin-top: 34px;
 
   display: flex;
   flex-direction: column;
@@ -69,7 +74,7 @@
 }
 
 .navigation > a {
-  min-height: 44px;
+  min-height: 45px;
 
   padding: 0 12px;
 
@@ -80,26 +85,26 @@
 
   color: #4a5a65;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
   font-size: 14px;
   font-weight: 700;
 
   transition:
-    color 140ms ease,
-    background 140ms ease;
+    color 130ms ease,
+    background 130ms ease;
 }
 
 .navigation > a:hover {
   color: #1768aa;
 
-  background: #f0f7fc;
+  background: #f2f7fa;
 }
 
 .navigation > a.active {
   color: #0b67b9;
 
-  background: #eaf5fd;
+  background: #eaf4fb;
 
   font-weight: 800;
 }
@@ -109,7 +114,6 @@
 }
 
 .shipButton {
-  width: 100%;
   min-height: 44px;
 
   display: flex;
@@ -119,26 +123,17 @@
   gap: 7px;
 
   color: #ffffff;
-  background: #0b67b9;
+  background: #176fb3;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
   font-size: 13px;
   font-weight: 800;
-
-  transition:
-    background 140ms ease,
-    transform 140ms ease;
 }
 
-.shipButton:hover {
-  background: #095ba4;
-
-  transform:
-    translateY(-1px);
-}
-
-/* Workspace */
+/* =========================
+   Workspace
+========================= */
 
 .workspace {
   min-height: 100vh;
@@ -146,7 +141,9 @@
   margin-left: 212px;
 }
 
-/* Header */
+/* =========================
+   Header
+========================= */
 
 .topbar {
   position: sticky;
@@ -154,29 +151,26 @@
 
   top: 0;
 
-  width: 100%;
-
   background:
     rgba(
       255,
       255,
       255,
-      0.96
+      0.97
     );
 
   border-bottom:
     1px solid #dce5eb;
 
   backdrop-filter:
-    blur(14px);
+    blur(12px);
 }
 
 .topbarInner {
-  width: min(
-    calc(100% - 48px),
-    1180px
-  );
+  width:
+    calc(100% - 40px);
 
+  max-width: 1134px;
   min-height: 68px;
 
   margin: 0 auto;
@@ -184,16 +178,14 @@
   display: grid;
 
   grid-template-columns:
-    minmax(170px, 1fr)
+    minmax(145px, 1fr)
     minmax(250px, 390px)
-    minmax(280px, 1fr);
+    minmax(270px, 1fr);
 
   align-items: center;
 
-  gap: 22px;
+  gap: 20px;
 }
-
-/* Page info */
 
 .pageIdentity {
   min-width: 0;
@@ -213,7 +205,7 @@
 
   color: #18232b;
 
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
 
   text-overflow: ellipsis;
@@ -225,8 +217,7 @@
 
   color: #71808a;
 
-  font-size: 10px;
-  font-weight: 550;
+  font-size: 12px;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -236,67 +227,6 @@
   display: none;
 }
 
-/* Search */
-
-.searchBar {
-  width: 100%;
-  height: 40px;
-
-  padding: 0 13px;
-
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
-
-  color: #70808b;
-  background: #f6f9fb;
-
-  border:
-    1px solid #d8e2e8;
-
-  border-radius: 11px;
-
-  transition:
-    background 140ms ease,
-    border-color 140ms ease,
-    box-shadow 140ms ease;
-}
-
-.searchBar:focus-within {
-  background: #ffffff;
-
-  border-color: #9dc7e3;
-
-  box-shadow:
-    0 0 0 3px
-      rgba(
-        46,
-        139,
-        230,
-        0.07
-      );
-}
-
-.searchBar input {
-  width: 100%;
-  min-width: 0;
-
-  color: #26353f;
-  background: transparent;
-
-  border: 0;
-  outline: none;
-
-  font-size: 12px;
-}
-
-.searchBar input::placeholder {
-  color: #89969e;
-}
-
-/* Header actions */
-
 .topbarActions {
   min-width: 0;
 
@@ -304,21 +234,20 @@
   align-items: center;
   justify-content: flex-end;
 
-  gap: 8px;
+  gap: 7px;
 }
 
 .applicationButton {
-  height: 38px;
+  height: 39px;
 
   padding: 0 11px;
 
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
 
   gap: 6px;
 
-  color: #38505e;
+  color: #3a4e59;
   background: #ffffff;
 
   border:
@@ -326,26 +255,27 @@
 
   border-radius: 9px;
 
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 750;
 
   white-space: nowrap;
 }
 
 .applicationButton:hover {
-  color: #0b67b9;
+  color: #176fb3;
 
-  background: #f4f9fd;
+  background: #f7fafc;
 
-  border-color: #afd0e5;
+  border-color: #b9d0df;
 }
 
-/* Notification */
+/* =========================
+   Notification
+========================= */
 
-.notificationWrap {
+.notificationWrap,
+.profileWrap {
   position: relative;
-
-  flex: 0 0 auto;
 }
 
 .notificationButton {
@@ -364,22 +294,15 @@
   border:
     1px solid #d5e0e7;
 
-  border-radius: 10px;
+  border-radius: 9px;
 
   cursor: pointer;
-
-  transition:
-    color 140ms ease,
-    background 140ms ease,
-    border-color 140ms ease;
 }
 
 .notificationButton:hover {
-  color: #0b67b9;
+  color: #176fb3;
 
-  background: #f4f9fd;
-
-  border-color: #afd0e5;
+  background: #f7fafc;
 }
 
 .notificationBadge {
@@ -405,23 +328,21 @@
 
   border-radius: 999px;
 
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 800;
 }
 
-/* Profile */
-
-.profileWrap {
-  position: relative;
-}
+/* =========================
+   Profile
+========================= */
 
 .profileButton {
-  min-width: 155px;
+  min-width: 151px;
   height: 44px;
 
   padding:
     0
-    9px
+    8px
     0
     5px;
 
@@ -442,19 +363,15 @@
   border:
     1px solid #d4dfe6;
 
-  border-radius: 11px;
+  border-radius: 10px;
 
   cursor: pointer;
-
-  transition:
-    background 140ms ease,
-    border-color 140ms ease;
 }
 
 .profileButton:hover {
-  background: #f8fbfd;
+  background: #f8fafb;
 
-  border-color: #b5cddd;
+  border-color: #b9cad5;
 }
 
 .profileImage {
@@ -463,10 +380,7 @@
 
   object-fit: cover;
 
-  border:
-    1px solid #d3dee6;
-
-  border-radius: 9px;
+  border-radius: 8px;
 }
 
 .profileText {
@@ -482,9 +396,7 @@
 
   color: #1f2a31;
 
-  font-size: 12px;
-  line-height: 1.15;
-
+  font-size: 13px;
   font-weight: 800;
 
   text-overflow: ellipsis;
@@ -494,16 +406,13 @@
 .profileText small {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 2px;
 
   overflow: hidden;
 
   color: #7a8992;
 
-  font-size: 9px;
-  line-height: 1;
-
-  font-weight: 600;
+  font-size: 11px;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -513,15 +422,13 @@
   color: #77858e;
 
   transition:
-    transform 180ms ease;
+    transform 160ms ease;
 }
 
 .chevronOpen {
   transform:
     rotate(180deg);
 }
-
-/* Profile menu */
 
 .profileMenu {
   position: absolute;
@@ -539,10 +446,10 @@
   border:
     1px solid #d5e0e7;
 
-  border-radius: 13px;
+  border-radius: 12px;
 
   box-shadow:
-    0 16px 42px
+    0 16px 40px
       rgba(
         17,
         40,
@@ -561,35 +468,23 @@
 }
 
 .profileMenuHeader img {
-  width: 42px;
-  height: 42px;
-
-  object-fit: cover;
-
-  border:
-    1px solid #d5e0e7;
-
-  border-radius: 10px;
+  border-radius: 9px;
 }
 
 .profileMenuHeader strong {
   display: block;
 
-  color: #1d282f;
-
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 13px;
 }
 
 .profileMenuHeader span {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 2px;
 
   color: #798791;
 
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 11px;
 }
 
 .profileMenuDivider {
@@ -601,8 +496,7 @@
 }
 
 .profileMenu > a {
-  width: 100%;
-  min-height: 38px;
+  min-height: 39px;
 
   padding: 0 9px;
 
@@ -615,58 +509,97 @@
 
   border-radius: 8px;
 
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .profileMenu > a:hover {
-  color: #0b67b9;
+  color: #176fb3;
 
-  background: #f1f7fb;
+  background: #f2f7fa;
 }
 
-/* Main */
+/* =========================
+   Main
+========================= */
 
 .main {
   width: 100%;
 }
 
-.content {
-  width: min(
-    calc(100% - 48px),
-    1180px
-  );
+/*
+ * 중앙 900px
+ * 우측 210px
+ *
+ * 실시간 순위와 SNS는
+ * 동일한 오른쪽 rail 안에 배치
+ */
+
+.browseLayout {
+  width:
+    calc(100% - 40px);
+
+  max-width: 1134px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 900px)
+    210px;
+
+  align-items: start;
+  justify-content: center;
+
+  gap: 24px;
+}
+
+.centerColumn {
+  width: 100%;
+  min-width: 0;
+}
+
+.rightRail {
+  position: sticky;
+
+  top: 88px;
+
+  padding-top: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.normalContent {
+  width:
+    calc(100% - 48px);
+
+  max-width: 1000px;
 
   margin: 0 auto;
 }
 
-/* Mobile */
+/* =========================
+   Responsive
+========================= */
 
-.mobileUpload,
-.mobileNavigation {
-  display: none;
-}
-
-@media (max-width: 1220px) {
-  .topbarInner {
+@media (max-width: 1320px) {
+  .browseLayout {
     grid-template-columns:
-      minmax(120px, 1fr)
-      minmax(220px, 310px)
-      auto;
+      minmax(0, 900px);
+
+    max-width: 900px;
   }
 
-  .pageText span {
+  .rightRail {
     display: none;
   }
 
-  .applicationButton span {
-    display: none;
-  }
-
-  .applicationButton {
-    width: 40px;
-
-    padding: 0;
+  .topbarInner {
+    max-width: 900px;
   }
 }
 
@@ -679,18 +612,28 @@
     margin-left: 0;
   }
 
+  .browseLayout {
+    width:
+      calc(100% - 32px);
+
+    max-width: 900px;
+  }
+
+  .normalContent {
+    width:
+      calc(100% - 32px);
+  }
+
   .topbarInner {
     width:
       calc(100% - 32px);
 
-    min-height: 62px;
+    max-width: 900px;
 
     grid-template-columns:
       auto
-      minmax(180px, 1fr)
+      minmax(200px, 1fr)
       auto;
-
-    gap: 14px;
   }
 
   .pageText {
@@ -714,75 +657,21 @@
     width: 29px;
     height: 29px;
   }
-
-  .mobileBrand strong {
-    font-size: 17px;
-    font-weight: 800;
-  }
-
-  .content {
-    width:
-      calc(100% - 32px);
-  }
-
-  .mobileNavigation {
-    display: flex;
-    align-items: center;
-
-    overflow-x: auto;
-
-    border-top:
-      1px solid #eef2f5;
-
-    scrollbar-width: none;
-  }
-
-  .mobileNavigation::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mobileNavigation a {
-    min-width: max-content;
-    min-height: 39px;
-
-    padding: 0 14px;
-
-    display: flex;
-    align-items: center;
-
-    color: #687781;
-
-    border-bottom:
-      2px solid transparent;
-
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  .mobileNavigation
-    a.mobileActive {
-    color: #0b67b9;
-
-    border-bottom-color:
-      #2e8be6;
-  }
 }
 
 @media (max-width: 720px) {
   .topbarInner {
+    width:
+      calc(100% - 24px);
+
     grid-template-columns:
       auto
       1fr;
-
-    gap: 10px;
   }
 
-  .searchBar {
+  .topbarInner
+    > :nth-child(2) {
     display: none;
-  }
-
-  .topbarActions {
-    grid-column: 2;
   }
 
   .applicationButton {
@@ -792,8 +681,6 @@
   .profileButton {
     min-width: 40px;
     width: 40px;
-
-    height: 40px;
 
     padding: 2px;
 
@@ -806,33 +693,8 @@
     display: none;
   }
 
-  .profileImage {
-    width: 34px;
-    height: 34px;
-  }
-
-  .mobileUpload {
-    width: 40px;
-    height: 40px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #ffffff;
-    background: #0b67b9;
-
-    border-radius: 10px;
-  }
-
-  .profileMenu {
-    right: -45px;
-  }
-}
-
-@media (max-width: 460px) {
-  .topbarInner,
-  .content {
+  .browseLayout,
+  .normalContent {
     width:
       calc(100% - 24px);
   }
