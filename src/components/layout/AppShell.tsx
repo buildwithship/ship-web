@@ -10,7 +10,6 @@ import {
   Home,
   LayoutGrid,
   Plus,
-  Search,
   UserRound,
   UserRoundSearch,
   Users,
@@ -24,6 +23,7 @@ import {
 
 import AdBanner from '@/components/common/AdBanner';
 import NotificationPanel from '@/components/notification/NotificationPanel';
+import HeaderSearch from '@/components/search/HeaderSearch';
 
 import {
   notifications as initialNotifications,
@@ -396,14 +396,10 @@ export default function AppShell({
       </aside>
 
       <div
-        className={
-          styles.workspace
-        }
+        className={styles.workspace}
       >
         <header
-          className={
-            styles.topbar
-          }
+          className={styles.topbar}
         >
           <div
             className={
@@ -441,9 +437,7 @@ export default function AppShell({
                 }
               >
                 <strong>
-                  {
-                    pageInfo.title
-                  }
+                  {pageInfo.title}
                 </strong>
 
                 <span>
@@ -454,22 +448,7 @@ export default function AppShell({
               </div>
             </div>
 
-            <label
-              className={
-                styles.searchBar
-              }
-            >
-              <Search
-                size={17}
-                strokeWidth={2}
-              />
-
-              <input
-                type="search"
-                placeholder="프로젝트, 메이커 검색"
-                aria-label="통합 검색"
-              />
-            </label>
+            <HeaderSearch />
 
             <div
               className={
@@ -493,9 +472,7 @@ export default function AppShell({
               </Link>
 
               <div
-                ref={
-                  notificationRef
-                }
+                ref={notificationRef}
                 className={
                   styles.notificationWrap
                 }
