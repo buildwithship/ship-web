@@ -2,7 +2,7 @@
   width: 100%;
 
   margin-top: 24px;
-  padding: 24px 0 10px;
+  padding: 24px 0 12px;
 
   overflow: hidden;
 
@@ -15,7 +15,7 @@
   position: relative;
 
   width: 100%;
-  height: 202px;
+  height: 268px;
 
   overflow: hidden;
 }
@@ -31,45 +31,59 @@
   background: #e8eff4;
 
   border: 1px solid #d3dde4;
-  border-radius: 14px;
+  border-radius: 16px;
 
   box-shadow:
-    0 7px 20px
+    0 8px 24px
       rgba(
         25,
         54,
         75,
-        0.08
+        0.09
       );
 
   transition:
-    transform
-      620ms
+    transform 620ms
       cubic-bezier(
         0.22,
         0.75,
         0.2,
         1
       ),
-    opacity
-      420ms ease,
-    filter
-      420ms ease,
-    box-shadow
-      420ms ease;
+    width 620ms
+      cubic-bezier(
+        0.22,
+        0.75,
+        0.2,
+        1
+      ),
+    height 620ms
+      cubic-bezier(
+        0.22,
+        0.75,
+        0.2,
+        1
+      ),
+    opacity 420ms ease,
+    filter 420ms ease,
+    box-shadow 420ms ease;
 
   will-change:
     transform,
+    width,
+    height,
     opacity;
 
   pointer-events: none;
 }
 
+/* 중앙 메인 배너 */
+
 .active {
   z-index: 4;
 
-  width: 68%;
-  height: 184px;
+  width: 70%;
+  height: 240px;
 
   opacity: 1;
 
@@ -87,60 +101,69 @@
   pointer-events: auto;
 
   box-shadow:
-    0 12px 30px
+    0 15px 34px
       rgba(
         31,
         73,
         102,
-        0.12
+        0.13
       );
 }
 
-.previous {
+/* 좌우 미리보기 */
+
+.previous,
+.next {
   z-index: 2;
 
-  width: 24%;
-  height: 148px;
+  width: 25%;
+  height: 190px;
 
-  opacity: 0.62;
+  opacity: 0.6;
 
   filter:
-    saturate(0.7)
-    brightness(0.75);
+    saturate(0.72)
+    brightness(0.74);
 
+  pointer-events: auto;
+
+  cursor: pointer;
+}
+
+.previous {
   transform:
     translate(
-      -210%,
+      -205%,
       -50%
     )
     scale(0.94);
 }
 
 .next {
-  z-index: 2;
-
-  width: 24%;
-  height: 148px;
-
-  opacity: 0.62;
-
-  filter:
-    saturate(0.7)
-    brightness(0.75);
-
   transform:
     translate(
-      110%,
+      105%,
       -50%
     )
     scale(0.94);
 }
 
+.previous:hover,
+.next:hover {
+  opacity: 0.78;
+
+  filter:
+    saturate(0.9)
+    brightness(0.82);
+}
+
+/* 화면 밖 슬라이드 */
+
 .hiddenLeft {
   z-index: 1;
 
-  width: 22%;
-  height: 135px;
+  width: 23%;
+  height: 170px;
 
   opacity: 0;
 
@@ -153,14 +176,14 @@
       -350%,
       -50%
     )
-    scale(0.86);
+    scale(0.85);
 }
 
 .hiddenRight {
   z-index: 1;
 
-  width: 22%;
-  height: 135px;
+  width: 23%;
+  height: 170px;
 
   opacity: 0;
 
@@ -173,7 +196,7 @@
       250%,
       -50%
     )
-    scale(0.86);
+    scale(0.85);
 }
 
 .image {
@@ -184,7 +207,7 @@
 }
 
 .active:hover .image {
-  transform: scale(1.018);
+  transform: scale(1.015);
 }
 
 .overlay {
@@ -199,21 +222,21 @@
         14,
         36,
         51,
-        0.7
+        0.72
       )
         0%,
       rgba(
         17,
         45,
         64,
-        0.42
+        0.45
       )
         50%,
       rgba(
         16,
         36,
         50,
-        0.04
+        0.06
       )
         100%
     );
@@ -229,7 +252,7 @@
       20,
       35,
       45,
-      0.2
+      0.18
     );
 }
 
@@ -240,7 +263,7 @@
   width: 100%;
   height: 100%;
 
-  padding: 28px 32px;
+  padding: 34px 38px;
 
   display: flex;
   flex-direction: column;
@@ -249,7 +272,7 @@
   opacity: 0;
 
   transform:
-    translateY(8px);
+    translateY(9px);
 
   transition:
     opacity 300ms ease
@@ -266,37 +289,39 @@
 }
 
 .copy strong {
-  max-width: 520px;
+  max-width: 560px;
 
   color: #ffffff;
 
-  font-size: 23px;
-  line-height: 1.4;
+  font-size: 25px;
+  line-height: 1.38;
 
   font-weight: 800;
 
   letter-spacing:
-    -0.03em;
+    -0.035em;
 }
 
 .copy p {
-  max-width: 500px;
+  max-width: 520px;
 
-  margin: 7px 0 0;
+  margin: 9px 0 0;
 
   color:
     rgba(
       255,
       255,
       255,
-      0.84
+      0.86
     );
 
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.55;
 
   font-weight: 550;
 }
+
+/* 화살표 */
 
 .arrow {
   position: absolute;
@@ -304,8 +329,8 @@
 
   top: 50%;
 
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
 
   padding: 0;
 
@@ -320,7 +345,7 @@
       255,
       255,
       255,
-      0.94
+      0.96
     );
 
   border:
@@ -329,12 +354,12 @@
   border-radius: 50%;
 
   box-shadow:
-    0 5px 15px
+    0 6px 17px
       rgba(
         25,
         57,
         80,
-        0.13
+        0.14
       );
 
   cursor: pointer;
@@ -355,21 +380,23 @@
 
   transform:
     translateY(-50%)
-    scale(1.05);
+    scale(1.06);
 }
 
 .arrowLeft {
-  left: 12.5%;
+  left: 11%;
 }
 
 .arrowRight {
-  right: 12.5%;
+  right: 11%;
 }
 
-.pagination {
-  min-height: 22px;
+/* 페이지 표시 */
 
-  margin-top: 4px;
+.pagination {
+  min-height: 24px;
+
+  margin-top: 6px;
 
   display: flex;
   align-items: center;
@@ -397,31 +424,33 @@
 }
 
 .pagination .activeDot {
-  width: 28px;
+  width: 29px;
 
   background: #2e8be6;
 }
 
+/* 태블릿 */
+
 @media (max-width: 900px) {
   .viewport {
-    height: 184px;
+    height: 230px;
   }
 
   .active {
-    width: 74%;
-    height: 168px;
+    width: 76%;
+    height: 210px;
   }
 
   .previous,
   .next {
-    width: 23%;
-    height: 132px;
+    width: 25%;
+    height: 165px;
   }
 
   .previous {
     transform:
       translate(
-        -230%,
+        -220%,
         -50%
       )
       scale(0.94);
@@ -430,38 +459,53 @@
   .next {
     transform:
       translate(
-        130%,
+        120%,
         -50%
       )
       scale(0.94);
   }
 
+  .copy {
+    padding: 28px 32px;
+  }
+
+  .copy strong {
+    font-size: 22px;
+  }
+
   .arrowLeft {
-    left: 8%;
+    left: 7%;
   }
 
   .arrowRight {
-    right: 8%;
+    right: 7%;
   }
 }
+
+/* 모바일 */
 
 @media (max-width: 640px) {
   .banner {
     margin-top: 16px;
-    padding-top: 14px;
+
+    padding:
+      14px
+      0
+      9px;
   }
 
   .viewport {
-    height: 164px;
+    height: 190px;
   }
 
   .active {
     width: calc(
-      100% - 34px
+      100% - 32px
     );
-    height: 152px;
 
-    border-radius: 12px;
+    height: 178px;
+
+    border-radius: 13px;
   }
 
   .previous,
@@ -469,25 +513,35 @@
   .hiddenLeft,
   .hiddenRight {
     opacity: 0;
+
+    pointer-events: none;
   }
 
   .copy {
-    padding: 20px 48px;
+    padding:
+      24px
+      50px;
   }
 
   .copy strong {
-    font-size: 18px;
+    max-width: 300px;
+
+    font-size: 19px;
+    line-height: 1.4;
   }
 
   .copy p {
-    max-width: 300px;
+    max-width: 280px;
+
+    margin-top: 6px;
 
     font-size: 13px;
+    line-height: 1.5;
   }
 
   .arrow {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
 
     color: #ffffff;
 
@@ -496,7 +550,7 @@
         16,
         32,
         43,
-        0.5
+        0.52
       );
 
     border-color:
@@ -516,15 +570,15 @@
         16,
         32,
         43,
-        0.72
+        0.74
       );
   }
 
   .arrowLeft {
-    left: 24px;
+    left: 23px;
   }
 
   .arrowRight {
-    right: 24px;
+    right: 23px;
   }
 }

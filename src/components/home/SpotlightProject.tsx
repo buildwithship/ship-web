@@ -2,8 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import {
+  Anchor,
   ArrowUpRight,
-  Crown,
   Eye,
   Users,
 } from 'lucide-react';
@@ -27,23 +27,20 @@ function getStatus(
   if (status === 'operating') {
     return {
       label: '운영중',
-      className:
-        styles.statusOperating,
+      className: styles.statusOperating,
     };
   }
 
   if (status === 'inProgress') {
     return {
       label: '진행중',
-      className:
-        styles.statusProgress,
+      className: styles.statusProgress,
     };
   }
 
   return {
     label: '운영종료',
-    className:
-      styles.statusEnded,
+    className: styles.statusEnded,
   };
 }
 
@@ -69,246 +66,172 @@ export default function SpotlightProject({
     <section className={styles.section}>
       <div className={styles.heading}>
         <div
-          className={
-            styles.headingLeft
-          }
+          className={styles.headingIcon}
         >
-          <div
-            className={
-              styles.crownIcon
-            }
-          >
-            <Crown
-              size={19}
-              strokeWidth={2}
-            />
-          </div>
-
-          <div>
-            <span
-              className={
-                styles.eyebrow
-              }
-            >
-              SHIP PICK
-            </span>
-
-            <h2>
-              주목받는 프로젝트
-            </h2>
-          </div>
+          <Anchor
+            size={18}
+            strokeWidth={2.2}
+          />
         </div>
 
-        <span
-          className={
-            styles.headingDescription
-          }
-        >
-          지금 많이 보고 있는 프로젝트
-        </span>
+        <div>
+          <span>ANCHOR</span>
+
+          <h2>
+            추천 프로젝트
+          </h2>
+        </div>
       </div>
 
       <article className={styles.card}>
-        <div
-          className={
-            styles.featureBar
-          }
+        <Link
+          href={`/projects/${project.slug}`}
+          className={styles.visual}
         >
+          <Image
+            src={project.bannerUrl}
+            alt={`${project.name} 대표 이미지`}
+            fill
+            sizes="(max-width: 760px) 100vw, 520px"
+            className={styles.banner}
+          />
+
           <div
-            className={
-              styles.featureLabel
-            }
+            className={styles.anchorLabel}
           >
-            <Crown
-              size={15}
-              strokeWidth={2.1}
+            <Anchor
+              size={14}
+              strokeWidth={2.2}
             />
 
-            <strong>
-              FEATURED
-            </strong>
+            ANCHOR
+          </div>
+        </Link>
+
+        <div className={styles.content}>
+          <div className={styles.badges}>
+            <span
+              className={`${styles.status} ${status.className}`}
+            >
+              {status.label}
+            </span>
+
+            {project.recruiting && (
+              <span
+                className={
+                  styles.recruiting
+                }
+              >
+                <Users
+                  size={13}
+                  strokeWidth={2}
+                />
+                팀원 모집
+              </span>
+            )}
           </div>
 
-          <span
+          <div
             className={
-              styles.featureText
+              styles.projectHeader
             }
           >
-            SHIP PICK
-          </span>
-        </div>
-
-        <div className={styles.body}>
-          <Link
-            href={`/projects/${project.slug}`}
-            className={styles.visual}
-          >
             <Image
-              src={project.bannerUrl}
-              alt={`${project.name} 대표 이미지`}
-              fill
-              sizes="(max-width: 720px) 100vw, 520px"
-              className={styles.banner}
+              src={project.logoUrl}
+              alt={`${project.name} 로고`}
+              width={50}
+              height={50}
+              className={styles.logo}
             />
 
-            <div
-              className={
-                styles.visualLabel
-              }
-            >
-              <Crown
-                size={13}
-                strokeWidth={2.2}
-              />
+            <div>
+              <h3>
+                {project.name}
+              </h3>
 
-              PICK
+              <p>
+                {project.tagline}
+              </p>
             </div>
-          </Link>
+          </div>
 
-          <div className={styles.content}>
-            <div className={styles.badges}>
-              <span
-                className={`${styles.status} ${status.className}`}
-              >
-                {status.label}
-              </span>
+          <p
+            className={
+              styles.description
+            }
+          >
+            {project.description}
+          </p>
 
-              {project.recruiting && (
-                <span
-                  className={
-                    styles.recruiting
-                  }
-                >
-                  <Users
-                    size={12}
-                    strokeWidth={2}
-                  />
-
-                  팀원 모집
+          <div
+            className={styles.categories}
+          >
+            {project.categories
+              .slice(0, 3)
+              .map((category) => (
+                <span key={category}>
+                  {category}
                 </span>
-              )}
-            </div>
+              ))}
+          </div>
 
-            <div
-              className={
-                styles.projectHeader
-              }
+          <div className={styles.footer}>
+            <Link
+              href={`/makers/${project.maker.username}`}
+              className={styles.maker}
             >
               <Image
-                src={project.logoUrl}
-                alt={`${project.name} 로고`}
-                width={52}
-                height={52}
-                className={styles.logo}
+                src={
+                  project.maker.avatarUrl
+                }
+                alt={
+                  project.maker.name
+                }
+                width={28}
+                height={28}
               />
 
-              <div
-                className={
-                  styles.projectTitle
-                }
-              >
-                <h3>
-                  {project.name}
-                </h3>
-
-                <p>
-                  {project.tagline}
-                </p>
-              </div>
-            </div>
-
-            <p
-              className={
-                styles.description
-              }
-            >
-              {project.description}
-            </p>
+              <span>
+                {project.maker.name}
+              </span>
+            </Link>
 
             <div
-              className={
-                styles.categories
-              }
+              className={styles.actions}
             >
-              {project.categories
-                .slice(0, 3)
-                .map(
-                  (category) => (
-                    <span
-                      key={category}
-                    >
-                      {category}
-                    </span>
-                  ),
-                )}
-            </div>
+              <PushButton
+                initialCount={
+                  project.pushCount
+                }
+                compact
+              />
 
-            <div className={styles.bottom}>
-              <Link
-                href={`/makers/${project.maker.username}`}
-                className={styles.maker}
+              <span
+                className={styles.views}
               >
-                <Image
-                  src={
-                    project.maker
-                      .avatarUrl
-                  }
-                  alt={
-                    project.maker.name
-                  }
-                  width={28}
-                  height={28}
+                <Eye
+                  size={15}
+                  strokeWidth={2}
                 />
 
-                <span>
-                  {
-                    project.maker
-                      .name
-                  }
-                </span>
-              </Link>
+                {formatCount(
+                  project.viewCount,
+                )}
+              </span>
 
-              <div
+              <Link
+                href={`/projects/${project.slug}`}
                 className={
-                  styles.actions
+                  styles.detailButton
                 }
               >
-                <PushButton
-                  initialCount={
-                    project.pushCount
-                  }
-                  compact
+                보기
+
+                <ArrowUpRight
+                  size={15}
+                  strokeWidth={2}
                 />
-
-                <span
-                  className={
-                    styles.views
-                  }
-                >
-                  <Eye
-                    size={14}
-                    strokeWidth={2}
-                  />
-
-                  {formatCount(
-                    project.viewCount,
-                  )}
-                </span>
-
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className={
-                    styles.detailButton
-                  }
-                >
-                  자세히
-
-                  <ArrowUpRight
-                    size={14}
-                    strokeWidth={2}
-                  />
-                </Link>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
