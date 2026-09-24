@@ -2,26 +2,21 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import {
+  usePathname,
+} from 'next/navigation';
+
 import {
   Bell,
   ChevronDown,
-  CircleHelp,
   Home,
   LayoutGrid,
   LogOut,
   Plus,
-  Search,
-  Settings,
   UserRound,
   UserRoundSearch,
   Users,
 } from 'lucide-react';
-import {
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
 
 import {
   useEffect,
@@ -29,10 +24,24 @@ import {
   useState,
 } from 'react';
 
+import AuthGuard from '@/components/auth/AuthGuard';
 import RealtimeRanking from '@/components/browse/RealtimeRanking';
 import CommunityRail from '@/components/browse/CommunityRail';
 import AdBanner from '@/components/common/AdBanner';
-import RightUtilityRail from '@/components/layout/RightUtilityRail';
+import NotificationPanel from '@/components/notification/NotificationPanel';
+import HeaderSearch from '@/components/search/HeaderSearch';
+
+import {
+  useAuth,
+} from '@/contexts/AuthContext';
+
+import {
+  notifications as initialNotifications,
+} from '@/mocks/notifications';
+
+import {
+  ShipNotification,
+} from '@/types/notification';
 
 import styles from './AppShell.module.css';
 
@@ -70,6 +79,23 @@ const browsePages = [
   '/recruiting',
 ];
 
+const protectedPages = [
+  '/projects/new',
+  '/applications',
+];
+
+function isProtectedPath(
+  pathname: string,
+) {
+  return protectedPages.some(
+    (path) =>
+      pathname === path ||
+      pathname.startsWith(
+        `${path}/`,
+      ),
+  );
+}
+
 function ShipMark() {
   return (
     <svg
@@ -104,96 +130,155 @@ function ShipMark() {
   );
 }
 
-function getPageInfo(pathname: string) {
+function getPageInfo(
+  pathname: string,
+) {
   if (pathname === '/') {
     return {
       title: '홈',
-      description: '새로운 프로젝트를 발견해보세요.',
+      description:
+        '새로운 프로젝트를 발견해보세요.',
     };
   }
 
-  if (pathname === '/projects') {
+  if (
+    pathname === '/projects'
+  ) {
     return {
       title: '프로젝트',
-      description: '만들어진 서비스를 둘러보세요.',
+      description:
+        '만들어진 서비스를 둘러보세요.',
     };
   }
 
-  if (pathname.startsWith('/projects/new')) {
+  if (
+    pathname.startsWith(
+      '/projects/new',
+    )
+  ) {
     return {
       title: '프로젝트 등록',
-      description: '새로운 프로젝트를 SHIP에 올려보세요.',
+      description:
+        '새로운 프로젝트를 등록하세요.',
     };
   }
 
-  if (pathname.startsWith('/projects/')) {
+  if (
+    pathname.startsWith(
+      '/projects/',
+    )
+  ) {
     return {
       title: '프로젝트 상세',
-      description: '프로젝트의 이야기를 확인해보세요.',
+      description:
+        '프로젝트 정보를 확인해보세요.',
     };
   }
 
-  if (pathname === '/makers') {
+  if (
+    pathname === '/makers'
+  ) {
     return {
       title: '메이커',
-      description: '만드는 사람들을 만나보세요.',
+      description:
+        '프로젝트를 만드는 사람들을 만나보세요.',
     };
   }
 
-  if (pathname.startsWith('/makers/')) {
+  if (
+    pathname.startsWith(
+      '/makers/',
+    )
+  ) {
     return {
       title: '메이커 프로필',
-      description: '메이커의 프로젝트와 활동을 확인해보세요.',
+      description:
+        '메이커의 프로젝트를 확인해보세요.',
     };
   }
 
-  if (pathname === '/recruiting') {
+  if (
+    pathname === '/recruiting'
+  ) {
     return {
       title: '팀원 모집',
-      description: '함께 만들 프로젝트를 찾아보세요.',
+      description:
+        '함께할 프로젝트를 찾아보세요.',
     };
   }
 
-  if (pathname.startsWith('/applications')) {
+  if (
+    pathname.startsWith(
+      '/applications',
+    )
+  ) {
     return {
       title: '지원 관리',
-      description: '지원 현황과 받은 지원을 관리하세요.',
-    };
-  }
-
-  if (pathname === '/feedback') {
-    return {
-      title: '건의함',
-      description: 'SHIP에 의견을 보내주세요.',
+      description:
+        '지원 현황을 확인하고 관리하세요.',
     };
   }
 
   return {
     title: 'SHIP',
-    description: '프로젝트와 메이커를 연결합니다.',
+    description:
+      '프로젝트와 메이커를 연결합니다.',
   };
 }
 
 export default function AppShell({
   children,
 }: AppShellProps) {
-  const pathname = usePathname();
+  const pathname =
+    usePathname();
+
+  const {
+    user,
+    logout,
+  } = useAuth();
 
   const [
     profileOpen,
     setProfileOpen,
   ] = useState(false);
 
+  const [
+    notificationOpen,
+    setNotificationOpen,
+  ] = useState(false);
+
+  const [
+    notifications,
+    setNotifications,
+  ] = useState<
+    ShipNotification[]
+  >(initialNotifications);
+
   const profileRef =
     useRef<HTMLDivElement | null>(
       null,
     );
 
+  const notificationRef =
+    useRef<HTMLDivElement | null>(
+      null,
+    );
+
+  const isAuthPage =
+    pathname === '/login' ||
+    pathname === '/signup';
+
   const pageInfo =
     getPageInfo(pathname);
 
-  const showAd =
-    adPages.includes(pathname);
+  const isBrowsePage =
+    browsePages.includes(pathname);
+
+  const unreadCount =
+    notifications.filter(
+      (notification) =>
+        !notification.read,
+    ).length;
 
   const isActive = (
     href: string,
@@ -211,13 +296,25 @@ export default function AppShell({
     const handleClickOutside = (
       event: MouseEvent,
     ) => {
+      const target =
+        event.target as Node;
+
       if (
         profileRef.current &&
         !profileRef.current.contains(
-          event.target as Node,
+          target,
         )
       ) {
         setProfileOpen(false);
+      }
+
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(
+          target,
+        )
+      ) {
+        setNotificationOpen(false);
       }
     };
 
@@ -234,11 +331,50 @@ export default function AppShell({
     };
   }, []);
 
-  useEffect(() => {
-    setProfileOpen(false);
-  }, [pathname]);
+  if (isAuthPage) {
+    return children;
+  }
 
-  return (
+  const closeMenus = () => {
+    setProfileOpen(false);
+    setNotificationOpen(false);
+  };
+
+  const handleReadNotification = (
+    id: number,
+  ) => {
+    setNotifications(
+      (prev) =>
+        prev.map(
+          (notification) =>
+            notification.id === id
+              ? {
+                  ...notification,
+                  read: true,
+                }
+              : notification,
+        ),
+    );
+  };
+
+  const handleReadAll = () => {
+    setNotifications(
+      (prev) =>
+        prev.map(
+          (notification) => ({
+            ...notification,
+            read: true,
+          }),
+        ),
+    );
+  };
+
+  const projectCreateHref =
+    user
+      ? '/projects/new'
+      : '/login?next=/projects/new';
+
+  const shell = (
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <Link
@@ -269,7 +405,9 @@ export default function AppShell({
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={closeMenus}
+                  onClick={
+                    closeMenus
+                  }
                   className={
                     isActive(
                       item.href,
@@ -298,7 +436,9 @@ export default function AppShell({
           }
         >
           <Link
-            href="/projects/new"
+            href={
+              projectCreateHref
+            }
             className={
               styles.shipButton
             }
@@ -306,7 +446,6 @@ export default function AppShell({
           >
             <Plus
               size={18}
-              strokeWidth={2.2}
             />
 
             프로젝트 올리기
@@ -371,309 +510,356 @@ export default function AppShell({
               </div>
             </div>
 
-            <label
-              className={
-                styles.searchBar
-              }
-            >
-              <Search
-                size={17}
-                strokeWidth={2}
-              />
-
-              <input
-                type="search"
-                placeholder="프로젝트, 메이커 검색"
-                aria-label="통합 검색"
-              />
-
-              <kbd>⌘ K</kbd>
-            </label>
+            <HeaderSearch />
 
             <div
               className={
                 styles.topbarActions
               }
             >
-              <Link
-                href="/applications"
-                className={
-                  styles.applicationButton
-                }
-              >
-                <UserRoundSearch
-                  size={17}
-                  strokeWidth={2}
-                />
-
-                <span>
-                  지원 관리
-                </span>
-              </Link>
-
-              <button
-                type="button"
-                className={
-                  styles.notificationButton
-                }
-                aria-label="알림"
-              >
-                <Bell
-                  size={20}
-                  strokeWidth={2}
-                />
-
-                <span
-                  className={
-                    styles.notificationBadge
-                  }
-                >
-                  3
-                </span>
-              </button>
-
-              <div
-                ref={profileRef}
-                className={
-                  styles.profileWrap
-                }
-              >
-                <button
-                  type="button"
-                  className={
-                    styles.profileButton
-                  }
-                  onClick={() =>
-                    setProfileOpen(
-                      (prev) =>
-                        !prev,
-                    )
-                  }
-                  aria-expanded={
-                    profileOpen
-                  }
-                  aria-label="프로필 메뉴"
-                >
-                  <Image
-                    src="/images/makers/uptomaster.jpg"
-                    alt="이남혁 프로필"
-                    width={38}
-                    height={38}
+              {user ? (
+                <>
+                  <Link
+                    href="/applications"
                     className={
-                      styles.profileImage
-                    }
-                  />
-
-                  <span
-                    className={
-                      styles.profileText
+                      styles.applicationButton
                     }
                   >
-                    <strong>
-                      이남혁
-                    </strong>
-
-                    <small>
-                      @uptomaster
-                    </small>
-                  </span>
-
-                  <ChevronDown
-                    size={16}
-                    strokeWidth={2}
-                    className={
-                      profileOpen
-                        ? styles.chevronOpen
-                        : undefined
-                    }
-                  />
-                </button>
-
-                {profileOpen && (
-                  <div
-                    className={
-                      styles.profileMenu
-                    }
-                  >
-                    <div
-                      className={
-                        styles.profileMenuHeader
-                      }
-                    >
-                      <Image
-                        src="/images/makers/uptomaster.jpg"
-                        alt="이남혁 프로필"
-                        width={42}
-                        height={42}
-                      />
-
-                      <div>
-                        <strong>
-                          이남혁
-                        </strong>
-
-                        <span>
-                          @uptomaster
-                        </span>
-                      </div>
-                    </div>
-
-                    <div
-                      className={
-                        styles.profileMenuDivider
-                      }
+                    <UserRoundSearch
+                      size={17}
                     />
 
-                    <Link
-                      href="/makers/uptomaster"
-                    >
-                      <UserRound
-                        size={17}
-                      />
-
-                      내 프로필
-                    </Link>
-
-                    <Link
-                      href="/applications"
-                    >
-                      <UserRoundSearch
-                        size={17}
-                      />
-
+                    <span>
                       지원 관리
-                    </Link>
+                    </span>
+                  </Link>
 
-                    <Link
-                      href="/feedback"
-                    >
-                      <CircleHelp
-                        size={17}
-                      />
-
-                      건의함
-                    </Link>
-
-                    <Link
-                      href="/settings"
-                    >
-                      <Settings
-                        size={17}
-                      />
-
-                      설정
-                    </Link>
-
-                    <div
-                      className={
-                        styles.profileMenuDivider
-                      }
-                    />
-
+                  <div
+                    ref={
+                      notificationRef
+                    }
+                    className={
+                      styles.notificationWrap
+                    }
+                  >
                     <button
                       type="button"
                       className={
-                        styles.logoutButton
+                        styles.notificationButton
                       }
+                      onClick={() => {
+                        setNotificationOpen(
+                          (prev) =>
+                            !prev,
+                        );
+
+                        setProfileOpen(
+                          false,
+                        );
+                      }}
+                      aria-label="알림"
                     >
-                      <LogOut
-                        size={17}
+                      <Bell
+                        size={20}
                       />
 
-                      로그아웃
+                      {unreadCount >
+                        0 && (
+                        <span
+                          className={
+                            styles.notificationBadge
+                          }
+                        >
+                          {unreadCount >
+                          9
+                            ? '9+'
+                            : unreadCount}
+                        </span>
+                      )}
                     </button>
-                  </div>
-                )}
-              </div>
 
-              <Link
-                href="/projects/new"
-                className={
-                  styles.mobileUpload
-                }
-                aria-label="프로젝트 올리기"
-              >
-                <Plus
-                  size={18}
-                  strokeWidth={2.2}
-                />
-              </Link>
-            </div>
-          </div>
-
-                <span>
-                  지원 관리
-                </span>
-              </Link>
-
-              <div
-                ref={
-                  notificationRef
-                }
-                className={
-                  styles.notificationWrap
-                }
-              >
-                <button
-                  type="button"
-                  className={
-                    styles.notificationButton
-                  }
-                  aria-label="알림"
-                  onClick={() => {
-                    setNotificationOpen(
-                      (prev) =>
-                        !prev,
-                    );
-
-                    setProfileOpen(
-                      false,
-                    );
-                  }}
-                >
-                  <Bell
-                    size={20}
-                    strokeWidth={2}
-                  />
-
-        <div className={styles.main}>
-          <div
-            className={
-              styles.content
-            }
-          >
-            {showAd && (
-              <AdBanner />
-            )}
-
-                    <Link
-                      href="/makers/uptomaster"
-                      onClick={
-                        closeMenus
-                      }
-                    >
-                      <UserRound
-                        size={17}
+                    {notificationOpen && (
+                      <NotificationPanel
+                        notifications={
+                          notifications
+                        }
+                        onRead={
+                          handleReadNotification
+                        }
+                        onReadAll={
+                          handleReadAll
+                        }
+                        onClose={() =>
+                          setNotificationOpen(
+                            false,
+                          )
+                        }
                       />
-
-                      내 프로필
-                    </Link>
-
-                    <Link
-                      href="/applications"
-                      onClick={
-                        closeMenus
-                      }
-                    >
-                      <UserRoundSearch
-                        size={17}
-                      />
-
-                      지원 관리
-                    </Link>
+                    )}
                   </div>
-                )}
-              </div>
+
+                  <div
+                    ref={profileRef}
+                    className={
+                      styles.profileWrap
+                    }
+                  >
+                    <button
+                      type="button"
+                      className={
+                        styles.profileButton
+                      }
+                      onClick={() => {
+                        setProfileOpen(
+                          (prev) =>
+                            !prev,
+                        );
+
+                        setNotificationOpen(
+                          false,
+                        );
+                      }}
+                    >
+                      {user.avatarUrl ? (
+                        <Image
+                          src={
+                            user.avatarUrl
+                          }
+                          alt={
+                            user.name
+                          }
+                          width={36}
+                          height={36}
+                          className={
+                            styles.profileImage
+                          }
+                        />
+                      ) : (
+                        <span
+                          className={
+                            styles.profileImage
+                          }
+                          style={{
+                            display:
+                              'flex',
+                            alignItems:
+                              'center',
+                            justifyContent:
+                              'center',
+                            background:
+                              '#eaf4fb',
+                            color:
+                              '#176fb3',
+                            fontWeight:
+                              800,
+                          }}
+                        >
+                          {user.name
+                            .slice(
+                              0,
+                              1,
+                            )
+                            .toUpperCase()}
+                        </span>
+                      )}
+
+                      <span
+                        className={
+                          styles.profileText
+                        }
+                      >
+                        <strong>
+                          {user.name}
+                        </strong>
+
+                        <small>
+                          @
+                          {
+                            user.username
+                          }
+                        </small>
+                      </span>
+
+                      <ChevronDown
+                        size={15}
+                        className={
+                          profileOpen
+                            ? styles.chevronOpen
+                            : undefined
+                        }
+                      />
+                    </button>
+
+                    {profileOpen && (
+                      <div
+                        className={
+                          styles.profileMenu
+                        }
+                      >
+                        <div
+                          className={
+                            styles.profileMenuHeader
+                          }
+                        >
+                          {user.avatarUrl ? (
+                            <Image
+                              src={
+                                user.avatarUrl
+                              }
+                              alt={
+                                user.name
+                              }
+                              width={42}
+                              height={42}
+                            />
+                          ) : (
+                            <span
+                              style={{
+                                width:
+                                  42,
+                                height:
+                                  42,
+                                display:
+                                  'flex',
+                                alignItems:
+                                  'center',
+                                justifyContent:
+                                  'center',
+                                borderRadius:
+                                  9,
+                                background:
+                                  '#eaf4fb',
+                                color:
+                                  '#176fb3',
+                                fontWeight:
+                                  800,
+                              }}
+                            >
+                              {user.name.slice(
+                                0,
+                                1,
+                              )}
+                            </span>
+                          )}
+
+                          <div>
+                            <strong>
+                              {
+                                user.name
+                              }
+                            </strong>
+
+                            <span>
+                              @
+                              {
+                                user.username
+                              }
+                            </span>
+                          </div>
+                        </div>
+
+                        <div
+                          className={
+                            styles.profileMenuDivider
+                          }
+                        />
+
+                        <Link
+                          href={`/makers/${user.username}`}
+                          onClick={
+                            closeMenus
+                          }
+                        >
+                          <UserRound
+                            size={17}
+                          />
+
+                          내 프로필
+                        </Link>
+
+                        <Link
+                          href="/applications"
+                          onClick={
+                            closeMenus
+                          }
+                        >
+                          <UserRoundSearch
+                            size={17}
+                          />
+
+                          지원 관리
+                        </Link>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            logout();
+                            closeMenus();
+                          }}
+                          style={{
+                            width:
+                              '100%',
+                            minHeight:
+                              39,
+                            padding:
+                              '0 9px',
+                            display:
+                              'flex',
+                            alignItems:
+                              'center',
+                            gap: 9,
+                            color:
+                              '#b54747',
+                            background:
+                              'transparent',
+                            border: 0,
+                            borderRadius:
+                              8,
+                            fontSize:
+                              12,
+                            fontWeight:
+                              700,
+                            cursor:
+                              'pointer',
+                          }}
+                        >
+                          <LogOut
+                            size={17}
+                          />
+
+                          로그아웃
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className={
+                      styles.applicationButton
+                    }
+                  >
+                    로그인
+                  </Link>
+
+                  <Link
+                    href="/signup"
+                    className={
+                      styles.shipButton
+                    }
+                    style={{
+                      minHeight:
+                        39,
+                      padding:
+                        '0 14px',
+                    }}
+                  >
+                    가입하기
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </header>
@@ -716,8 +902,18 @@ export default function AppShell({
           )}
         </main>
       </div>
-
-      <RightUtilityRail />
     </div>
   );
+
+  if (
+    isProtectedPath(pathname)
+  ) {
+    return (
+      <AuthGuard>
+        {shell}
+      </AuthGuard>
+    );
+  }
+
+  return shell;
 }

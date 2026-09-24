@@ -1,11 +1,13 @@
 'use client';
 
 import Image from 'next/image';
+
 import {
   Check,
   ExternalLink,
   X,
 } from 'lucide-react';
+
 import {
   FormEvent,
   useEffect,
@@ -25,11 +27,15 @@ interface RecruitmentApplyModalProps {
   onClose: () => void;
 }
 
-export default function RecruitmentApplyModal({
+interface RecruitmentApplyModalContentProps {
+  recruitment: Recruitment;
+  onClose: () => void;
+}
+
+function RecruitmentApplyModalContent({
   recruitment,
-  open,
   onClose,
-}: RecruitmentApplyModalProps) {
+}: RecruitmentApplyModalContentProps) {
   const [role, setRole] =
     useState<RecruitmentRole>(
       recruitment.positions[0]?.role ??
@@ -39,59 +45,15 @@ export default function RecruitmentApplyModal({
   const [message, setMessage] =
     useState('');
 
-  const [portfolioUrl, setPortfolioUrl] =
-    useState('');
+  const [
+    portfolioUrl,
+    setPortfolioUrl,
+  ] = useState('');
 
-  const [submitted, setSubmitted] =
-    useState(false);
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const handleKeyDown = (
-      event: KeyboardEvent,
-    ) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.body.style.overflow =
-      'hidden';
-
-    window.addEventListener(
-      'keydown',
-      handleKeyDown,
-    );
-
-    return () => {
-      document.body.style.overflow = '';
-
-      window.removeEventListener(
-        'keydown',
-        handleKeyDown,
-      );
-    };
-  }, [open, onClose]);
-
-  useEffect(() => {
-    if (open) {
-      setRole(
-        recruitment.positions[0]?.role ??
-          'Frontend',
-      );
-
-      setMessage('');
-      setPortfolioUrl('');
-      setSubmitted(false);
-    }
-  }, [open, recruitment]);
-
-  if (!open) {
-    return null;
-  }
+  const [
+    submitted,
+    setSubmitted,
+  ] = useState(false);
 
   const handleSubmit = (
     event: FormEvent<HTMLFormElement>,
@@ -110,7 +72,8 @@ export default function RecruitmentApplyModal({
       projectName:
         recruitment.projectName,
       role,
-      message: message.trim(),
+      message:
+        message.trim(),
       portfolioUrl:
         portfolioUrl.trim() ||
         null,
@@ -177,7 +140,9 @@ export default function RecruitmentApplyModal({
             </h2>
 
             <p>
-              {recruitment.projectName}{' '}
+              {
+                recruitment.projectName
+              }{' '}
               팀에 지원 내용을
               전달했습니다.
             </p>
@@ -187,7 +152,9 @@ export default function RecruitmentApplyModal({
                 styles.completeInfo
               }
             >
-              <span>지원 포지션</span>
+              <span>
+                지원 포지션
+              </span>
 
               <strong>
                 {role}
@@ -225,7 +192,9 @@ export default function RecruitmentApplyModal({
 
               <div>
                 <span>
-                  {recruitment.projectName}
+                  {
+                    recruitment.projectName
+                  }
                 </span>
 
                 <h2>
@@ -235,8 +204,12 @@ export default function RecruitmentApplyModal({
             </header>
 
             <form
-              className={styles.form}
-              onSubmit={handleSubmit}
+              className={
+                styles.form
+              }
+              onSubmit={
+                handleSubmit
+              }
             >
               <div
                 className={
@@ -253,7 +226,9 @@ export default function RecruitmentApplyModal({
                   }
                 >
                   {recruitment.positions.map(
-                    (position) => (
+                    (
+                      position,
+                    ) => (
                       <button
                         key={
                           position.role
@@ -308,8 +283,9 @@ export default function RecruitmentApplyModal({
                   </strong>
 
                   <span>
-                    이름, 활동 프로젝트와
-                    프로필 정보가 함께
+                    이름, 활동
+                    프로젝트와 프로필
+                    정보가 함께
                     전달됩니다.
                   </span>
                 </div>
@@ -324,13 +300,17 @@ export default function RecruitmentApplyModal({
                   htmlFor="application-message"
                 >
                   팀에게 전할 말
-                  <span>필수</span>
+                  <span>
+                    필수
+                  </span>
                 </label>
 
                 <textarea
                   id="application-message"
                   value={message}
-                  onChange={(event) =>
+                  onChange={(
+                    event,
+                  ) =>
                     setMessage(
                       event.target
                         .value,
@@ -346,7 +326,8 @@ export default function RecruitmentApplyModal({
                     styles.counter
                   }
                 >
-                  {message.length}/500
+                  {message.length}
+                  /500
                 </div>
               </div>
 
@@ -359,7 +340,9 @@ export default function RecruitmentApplyModal({
                   htmlFor="portfolio-url"
                 >
                   포트폴리오 링크
-                  <span>선택</span>
+                  <span>
+                    선택
+                  </span>
                 </label>
 
                 <div
@@ -378,7 +361,9 @@ export default function RecruitmentApplyModal({
                     value={
                       portfolioUrl
                     }
-                    onChange={(event) =>
+                    onChange={(
+                      event,
+                    ) =>
                       setPortfolioUrl(
                         event.target
                           .value,
@@ -422,5 +407,61 @@ export default function RecruitmentApplyModal({
         )}
       </section>
     </div>
+  );
+}
+
+export default function RecruitmentApplyModal({
+  recruitment,
+  open,
+  onClose,
+}: RecruitmentApplyModalProps) {
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const handleKeyDown = (
+      event: KeyboardEvent,
+    ) => {
+      if (
+        event.key === 'Escape'
+      ) {
+        onClose();
+      }
+    };
+
+    document.body.style.overflow =
+      'hidden';
+
+    window.addEventListener(
+      'keydown',
+      handleKeyDown,
+    );
+
+    return () => {
+      document.body.style.overflow =
+        '';
+
+      window.removeEventListener(
+        'keydown',
+        handleKeyDown,
+      );
+    };
+  }, [
+    open,
+    onClose,
+  ]);
+
+  if (!open) {
+    return null;
+  }
+
+  return (
+    <RecruitmentApplyModalContent
+      recruitment={
+        recruitment
+      }
+      onClose={onClose}
+    />
   );
 }
