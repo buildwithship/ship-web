@@ -288,11 +288,6 @@ export default function AppShell({
     };
   }, []);
 
-  useEffect(() => {
-    setProfileOpen(false);
-    setNotificationOpen(false);
-  }, [pathname]);
-
   const handleReadNotification = (
     id: number,
   ) => {
@@ -322,12 +317,18 @@ export default function AppShell({
     );
   };
 
+  const closeMenus = () => {
+    setProfileOpen(false);
+    setNotificationOpen(false);
+  };
+
   return (
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <Link
           href="/"
           className={styles.brand}
+          onClick={closeMenus}
         >
           <span className={styles.logo}>
             <ShipMark />
@@ -350,6 +351,7 @@ export default function AppShell({
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={closeMenus}
                   className={
                     isActive(
                       item.href,
@@ -382,6 +384,7 @@ export default function AppShell({
             className={
               styles.shipButton
             }
+            onClick={closeMenus}
           >
             <Plus
               size={18}
@@ -418,7 +421,12 @@ export default function AppShell({
                   styles.mobileBrand
                 }
               >
-                <Link href="/">
+                <Link
+                  href="/"
+                  onClick={
+                    closeMenus
+                  }
+                >
                   <span
                     className={
                       styles.logo
@@ -462,6 +470,9 @@ export default function AppShell({
                 className={
                   styles.applicationButton
                 }
+                onClick={
+                  closeMenus
+                }
               >
                 <UserRoundSearch
                   size={17}
@@ -474,7 +485,9 @@ export default function AppShell({
               </Link>
 
               <div
-                ref={notificationRef}
+                ref={
+                  notificationRef
+                }
                 className={
                   styles.notificationWrap
                 }
@@ -491,7 +504,9 @@ export default function AppShell({
                         !prev,
                     );
 
-                    setProfileOpen(false);
+                    setProfileOpen(
+                      false,
+                    );
                   }}
                 >
                   <Bell
@@ -626,6 +641,9 @@ export default function AppShell({
 
                     <Link
                       href="/makers/uptomaster"
+                      onClick={
+                        closeMenus
+                      }
                     >
                       <UserRound
                         size={17}
@@ -636,6 +654,9 @@ export default function AppShell({
 
                     <Link
                       href="/applications"
+                      onClick={
+                        closeMenus
+                      }
                     >
                       <UserRoundSearch
                         size={17}
