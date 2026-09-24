@@ -84,7 +84,7 @@
 }
 
 .button strong {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 
   letter-spacing: 0.03em;
@@ -93,7 +93,7 @@
 .count {
   min-width: 20px;
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -112,7 +112,7 @@
 
 .compact strong,
 .compact .count {
-  font-size: 11px;
+  font-size: 13px;
 }
 
 /* 클릭 효과 */

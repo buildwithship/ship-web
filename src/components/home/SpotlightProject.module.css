@@ -56,6 +56,8 @@
 
 /* Main */
 
+/* Card */
+
 .card {
   width: 100%;
   min-height: 300px;
@@ -66,7 +68,7 @@
     minmax(340px, 0.9fr)
     minmax(0, 1.1fr);
 
-  overflow: hidden;
+  border-radius: 17px;
 
   background: #ffffff;
 
@@ -390,7 +392,7 @@
 .views {
   min-height: 34px;
 
-  padding: 0 6px;
+  padding: 0 5px;
 
   display: inline-flex;
   align-items: center;

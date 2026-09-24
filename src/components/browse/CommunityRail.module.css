@@ -1,0 +1,328 @@
+.section {
+  width: 100%;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border:
+    1px solid #dbe3e8;
+
+  border-radius: 13px;
+}
+
+.header {
+  min-height: 48px;
+
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid #e4eaee;
+}
+
+.header strong {
+  color: #1c272e;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.header span {
+  color: #8a969d;
+
+  font-size: 10px;
+  font-weight: 750;
+
+  letter-spacing: 0.06em;
+}
+
+.links {
+  padding: 7px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.links > a,
+.links > button {
+  width: 100%;
+  min-height: 53px;
+
+  padding: 7px 8px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #2f4049;
+  background: transparent;
+
+  border: 0;
+  border-radius: 9px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease;
+}
+
+.links > a:hover,
+.links > button:hover {
+  background: #f5f8fa;
+}
+
+.icon {
+  width: 34px;
+  height: 34px;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border:
+    1px solid #dbe3e8;
+
+  border-radius: 9px;
+}
+
+.links strong {
+  display: block;
+
+  font-size: 12px;
+  line-height: 1.2;
+
+  font-weight: 800;
+}
+
+.links small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #839098;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.instagram .icon {
+  color: #e4405f;
+}
+
+.threads .icon {
+  color: #111111;
+}
+
+.kakao .icon {
+  color: #3c1e1e;
+  background: #fee500;
+
+  border-color: #eed900;
+}
+
+.inquiry .icon {
+  color: #176fb3;
+}
+
+/* Inquiry modal */
+
+.overlay {
+  position: fixed;
+  z-index: 200;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(
+      17,
+      27,
+      34,
+      0.34
+    );
+}
+
+.modal {
+  width: min(
+    460px,
+    100%
+  );
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #ccd8df;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 20px 55px
+      rgba(
+        15,
+        30,
+        40,
+        0.18
+      );
+}
+
+.modalHeader {
+  margin-bottom: 17px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+}
+
+.modalHeader strong {
+  display: block;
+
+  color: #1c272e;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.modalHeader span {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #6c7a83;
+
+  font-size: 13px;
+}
+
+.modalHeader > button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #596a73;
+  background: #ffffff;
+
+  border:
+    1px solid #d8e1e6;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.modal textarea {
+  width: 100%;
+  min-height: 150px;
+
+  padding: 13px;
+
+  resize: vertical;
+
+  color: #293941;
+  background: #ffffff;
+
+  border:
+    1px solid #cfdbe2;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.modal textarea:focus {
+  border-color: #7fb4d7;
+}
+
+.modalBottom {
+  margin-top: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalBottom > span {
+  color: #8a969d;
+
+  font-size: 11px;
+}
+
+.modalBottom > button,
+.complete > button {
+  height: 36px;
+
+  padding: 0 13px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  color: #ffffff;
+  background: #176fb3;
+
+  border: 0;
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.modalBottom > button:disabled {
+  color: #8d999f;
+  background: #e6ecef;
+
+  cursor: default;
+}
+
+.complete {
+  padding: 32px 10px 12px;
+
+  text-align: center;
+}
+
+.complete strong {
+  color: #21313a;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.complete p {
+  margin: 7px 0 20px;
+
+  color: #6b7a83;
+
+  font-size: 13px;
+  line-height: 1.6;
+}

@@ -6,8 +6,8 @@ import {
   Users,
 } from 'lucide-react';
 
-import PlatformLinks from './PlatformLinks';
-import PushButton from './PushButton';
+import PlatformLinks from '@/components/project/PlatformLinks';
+import PushButton from '@/components/project/PushButton';
 
 import {
   Project,
@@ -18,6 +18,32 @@ import styles from './ProjectCard.module.css';
 
 interface ProjectCardProps {
   project: Project;
+}
+
+function getStatus(
+  status: ProjectStatus,
+) {
+  if (status === 'operating') {
+    return {
+      label: '운영중',
+      className:
+        styles.operating,
+    };
+  }
+
+  if (status === 'inProgress') {
+    return {
+      label: '진행중',
+      className:
+        styles.inProgress,
+    };
+  }
+
+  return {
+    label: '운영종료',
+    className:
+      styles.ended,
+  };
 }
 
 function formatCount(
@@ -32,32 +58,6 @@ function formatCount(
     .replace('.0', '')}K`;
 }
 
-function getStatus(
-  status: ProjectStatus,
-) {
-  if (status === 'operating') {
-    return {
-      label: '운영중',
-      className:
-        styles.statusOperating,
-    };
-  }
-
-  if (status === 'inProgress') {
-    return {
-      label: '진행중',
-      className:
-        styles.statusProgress,
-    };
-  }
-
-  return {
-    label: '운영종료',
-    className:
-      styles.statusEnded,
-  };
-}
-
 export default function ProjectCard({
   project,
 }: ProjectCardProps) {
@@ -68,7 +68,7 @@ export default function ProjectCard({
     <article className={styles.card}>
       <Link
         href={`/projects/${project.slug}`}
-        className={styles.imageWrap}
+        className={styles.visual}
       >
         <Image
           src={project.bannerUrl}
@@ -78,72 +78,122 @@ export default function ProjectCard({
           className={styles.banner}
         />
 
-        <span
-          className={`${styles.status} ${status.className}`}
+        <div
+          className={
+            styles.imageBadges
+          }
         >
-          {status.label}
-        </span>
-
-        {project.recruiting && (
           <span
-            className={styles.recruit}
+            className={`${styles.status} ${status.className}`}
           >
-            <Users
-              size={14}
-              strokeWidth={2}
-            />
-            팀원 모집
+            {status.label}
           </span>
-        )}
+
+          {project.recruiting && (
+            <span
+              className={
+                styles.recruiting
+              }
+            >
+              <Users
+                size={12}
+                strokeWidth={2}
+              />
+
+              모집중
+            </span>
+          )}
+        </div>
       </Link>
 
       <div className={styles.content}>
-        <div className={styles.projectHeader}>
-          <Image
-            src={project.logoUrl}
-            alt={`${project.name} 로고`}
-            width={44}
-            height={44}
-            className={styles.logo}
-          />
-
-          <div className={styles.title}>
+        <div
+          className={
+            styles.mainContent
+          }
+        >
+          <div
+            className={
+              styles.titleRow
+            }
+          >
             <Link
               href={`/projects/${project.slug}`}
             >
-              {project.name}
+              <h3>
+                {project.name}
+              </h3>
             </Link>
+          </div>
 
-            <p>
-              {project.tagline}
-            </p>
+          <p
+            className={
+              styles.tagline
+            }
+          >
+            {project.tagline}
+          </p>
+
+          <p
+            className={
+              styles.description
+            }
+          >
+            {project.description}
+          </p>
+
+          <div
+            className={
+              styles.categories
+            }
+          >
+            {project.categories
+              .slice(0, 3)
+              .map(
+                (category) => (
+                  <span
+                    key={category}
+                  >
+                    {category}
+                  </span>
+                ),
+              )}
           </div>
         </div>
 
-        <div className={styles.platformRow}>
-          <PlatformLinks
-            links={project.platforms}
-          />
-        </div>
-
-        <div className={styles.bottom}>
+        <div
+          className={
+            styles.metaFooter
+          }
+        >
           <Link
             href={`/makers/${project.maker.username}`}
             className={styles.maker}
           >
             <Image
-              src={project.maker.avatarUrl}
-              alt={project.maker.name}
-              width={27}
-              height={27}
+              src={
+                project.maker
+                  .avatarUrl
+              }
+              alt={
+                project.maker.name
+              }
+              width={26}
+              height={26}
             />
 
             <span>
-              {project.maker.name}
+              {
+                project.maker.name
+              }
             </span>
           </Link>
 
-          <div className={styles.stats}>
+          <div
+            className={
+              styles.metrics
+            }
+          >
             <PushButton
               initialCount={
                 project.pushCount
@@ -151,9 +201,11 @@ export default function ProjectCard({
               compact
             />
 
-            <span className={styles.views}>
+            <span
+              className={styles.views}
+            >
               <Eye
-                size={16}
+                size={14}
                 strokeWidth={2}
               />
 
@@ -164,6 +216,30 @@ export default function ProjectCard({
           </div>
         </div>
       </div>
+
+      {project.platforms.length >
+        0 && (
+        <div
+          className={
+            styles.platformFooter
+          }
+        >
+          <span
+            className={
+              styles.platformLabel
+            }
+          >
+            바로가기
+          </span>
+
+          <PlatformLinks
+            links={
+              project.platforms
+            }
+            compact
+          />
+        </div>
+      )}
     </article>
   );
 }

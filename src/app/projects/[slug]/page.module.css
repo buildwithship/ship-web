@@ -10,7 +10,7 @@
 
   color: #445560;
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 750;
 }
 
@@ -88,7 +88,7 @@
 
   border-radius: 8px;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
 }
 
@@ -140,7 +140,7 @@
 
   color: #354854;
 
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.5;
 
   font-weight: 600;
@@ -158,7 +158,7 @@
 
   color: #3c505c;
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 750;
 }
 
@@ -210,7 +210,7 @@
 
   color: #171d22;
 
-  font-size: 21px;
+  font-size: 23px;
   font-weight: 800;
 
   letter-spacing: -0.025em;
@@ -223,7 +223,7 @@
 
   color: #40515c;
 
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.8;
 
   font-weight: 500;
@@ -277,7 +277,7 @@
 
   color: #182229;
 
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
 }
 
@@ -286,7 +286,7 @@
 
   color: #485a66;
 
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
@@ -302,7 +302,7 @@
 
   cursor: pointer;
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -335,7 +335,7 @@
 
   color: #1d252b;
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -367,14 +367,14 @@
 }
 
 .stats span {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
 }
 
 .stats strong {
   color: #1d252b;
 
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -401,7 +401,7 @@
 
   border-radius: 7px;
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 750;
 }
 
@@ -430,7 +430,7 @@
 
   color: #192127;
 
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
 
   letter-spacing: -0.025em;
@@ -441,7 +441,7 @@
 
   color: #5a6872;
 
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -500,7 +500,7 @@
   }
 
   .header h1 {
-    font-size: 28px;
+    font-size: 30px;
   }
 
   .sidebar {

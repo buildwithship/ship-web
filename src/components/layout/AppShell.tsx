@@ -23,6 +23,14 @@ import {
   useState,
 } from 'react';
 
+import {
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+
+import RealtimeRanking from '@/components/browse/RealtimeRanking';
+import CommunityRail from '@/components/browse/CommunityRail';
 import AdBanner from '@/components/common/AdBanner';
 import RightUtilityRail from '@/components/layout/RightUtilityRail';
 
@@ -55,7 +63,7 @@ const navigation = [
   },
 ];
 
-const adPages = [
+const browsePages = [
   '/',
   '/projects',
   '/makers',
@@ -236,6 +244,7 @@ export default function AppShell({
         <Link
           href="/"
           className={styles.brand}
+          onClick={closeMenus}
         >
           <span className={styles.logo}>
             <ShipMark />
@@ -260,6 +269,7 @@ export default function AppShell({
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={closeMenus}
                   className={
                     isActive(
                       item.href,
@@ -292,6 +302,7 @@ export default function AppShell({
             className={
               styles.shipButton
             }
+            onClick={closeMenus}
           >
             <Plus
               size={18}
@@ -309,7 +320,9 @@ export default function AppShell({
         }
       >
         <header
-          className={styles.topbar}
+          className={
+            styles.topbar
+          }
         >
           <div
             className={
@@ -588,30 +601,40 @@ export default function AppShell({
             </div>
           </div>
 
-          <nav
-            className={
-              styles.mobileNavigation
-            }
-          >
-            {navigation.map(
-              (item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
+                <span>
+                  지원 관리
+                </span>
+              </Link>
+
+              <div
+                ref={
+                  notificationRef
+                }
+                className={
+                  styles.notificationWrap
+                }
+              >
+                <button
+                  type="button"
                   className={
-                    isActive(
-                      item.href,
-                    )
-                      ? styles.mobileActive
-                      : undefined
+                    styles.notificationButton
                   }
+                  aria-label="알림"
+                  onClick={() => {
+                    setNotificationOpen(
+                      (prev) =>
+                        !prev,
+                    );
+
+                    setProfileOpen(
+                      false,
+                    );
+                  }}
                 >
-                  {item.label}
-                </Link>
-              ),
-            )}
-          </nav>
-        </header>
+                  <Bell
+                    size={20}
+                    strokeWidth={2}
+                  />
 
         <div className={styles.main}>
           <div
@@ -623,9 +646,75 @@ export default function AppShell({
               <AdBanner />
             )}
 
-            {children}
+                    <Link
+                      href="/makers/uptomaster"
+                      onClick={
+                        closeMenus
+                      }
+                    >
+                      <UserRound
+                        size={17}
+                      />
+
+                      내 프로필
+                    </Link>
+
+                    <Link
+                      href="/applications"
+                      onClick={
+                        closeMenus
+                      }
+                    >
+                      <UserRoundSearch
+                        size={17}
+                      />
+
+                      지원 관리
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        </header>
+
+        <main className={styles.main}>
+          {isBrowsePage ? (
+            <div
+              className={
+                styles.browseLayout
+              }
+            >
+              <div
+                className={
+                  styles.centerColumn
+                }
+              >
+                <AdBanner />
+
+                {children}
+              </div>
+
+              <aside
+                className={
+                  styles.rightRail
+                }
+              >
+                <RealtimeRanking />
+
+                <CommunityRail />
+              </aside>
+            </div>
+          ) : (
+            <div
+              className={
+                styles.normalContent
+              }
+            >
+              {children}
+            </div>
+          )}
+        </main>
       </div>
 
       <RightUtilityRail />
