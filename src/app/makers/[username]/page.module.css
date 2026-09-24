@@ -48,7 +48,7 @@
 
   cursor: pointer;
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -78,7 +78,7 @@
 
   color: var(--text-secondary);
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
 }
 
@@ -89,7 +89,7 @@
 
   color: var(--text-secondary);
 
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.7;
 }
 
@@ -108,7 +108,7 @@
 
   color: var(--text-secondary);
 
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 650;
 }
 
@@ -135,14 +135,14 @@
 .stats strong {
   color: var(--text-primary);
 
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 800;
 }
 
 .stats span {
   color: var(--text-tertiary);
 
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .open {
@@ -155,7 +155,7 @@
 
   border-radius: 8px;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -181,7 +181,7 @@
 
   border-radius: 7px;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 650;
 }
 
@@ -200,7 +200,7 @@
 .sectionHeading h2 {
   margin: 0;
 
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 800;
 
   letter-spacing: -0.025em;
@@ -209,7 +209,7 @@
 .sectionHeading span {
   color: var(--text-tertiary);
 
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .grid {
@@ -225,7 +225,7 @@
 
   color: var(--text-tertiary);
 
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .back {
@@ -235,7 +235,7 @@
 
   color: var(--brand-primary);
 
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 

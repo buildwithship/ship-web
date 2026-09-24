@@ -270,7 +270,7 @@
 
   color: #ffffff;
 
-  font-size: 21px;
+  font-size: 23px;
   line-height: 1.4;
 
   font-weight: 800;
@@ -292,7 +292,7 @@
       0.84
     );
 
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
 
   font-weight: 550;
@@ -476,13 +476,13 @@
   }
 
   .copy strong {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .copy p {
     max-width: 300px;
 
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .arrow {

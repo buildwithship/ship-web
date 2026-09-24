@@ -21,6 +21,8 @@ import {
   useState,
 } from 'react';
 
+import RealtimeRanking from '@/components/browse/RealtimeRanking';
+import CommunityRail from '@/components/browse/CommunityRail';
 import AdBanner from '@/components/common/AdBanner';
 import NotificationPanel from '@/components/notification/NotificationPanel';
 import HeaderSearch from '@/components/search/HeaderSearch';
@@ -60,7 +62,7 @@ const navigation = [
   },
 ];
 
-const adPages = [
+const browsePages = [
   '/',
   '/projects',
   '/makers',
@@ -226,8 +228,8 @@ export default function AppShell({
   const pageInfo =
     getPageInfo(pathname);
 
-  const showAd =
-    adPages.includes(pathname);
+  const isBrowsePage =
+    browsePages.includes(pathname);
 
   const unreadCount =
     notifications.filter(
@@ -269,9 +271,7 @@ export default function AppShell({
           target,
         )
       ) {
-        setNotificationOpen(
-          false,
-        );
+        setNotificationOpen(false);
       }
     };
 
@@ -333,9 +333,7 @@ export default function AppShell({
             <ShipMark />
           </span>
 
-          <strong>
-            SHIP
-          </strong>
+          <strong>SHIP</strong>
         </Link>
 
         <nav
@@ -387,7 +385,7 @@ export default function AppShell({
           >
             <Plus
               size={18}
-              strokeWidth={2.2}
+              strokeWidth={2}
             />
 
             프로젝트 올리기
@@ -396,10 +394,14 @@ export default function AppShell({
       </aside>
 
       <div
-        className={styles.workspace}
+        className={
+          styles.workspace
+        }
       >
         <header
-          className={styles.topbar}
+          className={
+            styles.topbar
+          }
         >
           <div
             className={
@@ -483,18 +485,13 @@ export default function AppShell({
                     styles.notificationButton
                   }
                   aria-label="알림"
-                  aria-expanded={
-                    notificationOpen
-                  }
                   onClick={() => {
                     setNotificationOpen(
                       (prev) =>
                         !prev,
                     );
 
-                    setProfileOpen(
-                      false,
-                    );
+                    setProfileOpen(false);
                   }}
                 >
                   <Bell
@@ -556,13 +553,10 @@ export default function AppShell({
                       false,
                     );
                   }}
-                  aria-expanded={
-                    profileOpen
-                  }
                 >
                   <Image
                     src="/images/makers/uptomaster.jpg"
-                    alt="이남혁 프로필"
+                    alt="이남혁"
                     width={36}
                     height={36}
                     className={
@@ -652,59 +646,47 @@ export default function AppShell({
                   </div>
                 )}
               </div>
-
-              <Link
-                href="/projects/new"
-                className={
-                  styles.mobileUpload
-                }
-                aria-label="프로젝트 올리기"
-              >
-                <Plus
-                  size={18}
-                />
-              </Link>
             </div>
           </div>
-
-          <nav
-            className={
-              styles.mobileNavigation
-            }
-          >
-            {navigation.map(
-              (item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={
-                    isActive(
-                      item.href,
-                    )
-                      ? styles.mobileActive
-                      : undefined
-                  }
-                >
-                  {item.label}
-                </Link>
-              ),
-            )}
-          </nav>
         </header>
 
-        <div className={styles.main}>
-          <div
-            className={
-              styles.content
-            }
-          >
-            {showAd && (
-              <AdBanner />
-            )}
+        <main className={styles.main}>
+          {isBrowsePage ? (
+            <div
+              className={
+                styles.browseLayout
+              }
+            >
+              <div
+                className={
+                  styles.centerColumn
+                }
+              >
+                <AdBanner />
 
-            {children}
-          </div>
-        </div>
+                {children}
+              </div>
+
+              <aside
+                className={
+                  styles.rightRail
+                }
+              >
+                <RealtimeRanking />
+
+                <CommunityRail />
+              </aside>
+            </div>
+          ) : (
+            <div
+              className={
+                styles.normalContent
+              }
+            >
+              {children}
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
